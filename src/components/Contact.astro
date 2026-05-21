@@ -1,0 +1,33 @@
+---
+import Decor from './Decor.astro';
+
+const links = [
+  { label: 'GitHub', handle: '@SiamRahman29', href: 'https://github.com/SiamRahman29' },
+  { label: 'LinkedIn', handle: 'siamrahman-29', href: 'https://www.linkedin.com/in/siamrahman-29/' },
+];
+---
+<section class="contact" id="contact">
+  <div class="container">
+    <span class="eyebrow">03 / Start a build</span>
+    <div class="contact-grid" style="margin-top: 28px;">
+      <h2 class="contact-headline">
+        Got a brief?<br/>
+        <em>Send it.</em>
+      </h2>
+      <div class="contact-links">
+        {links.map((l) => (
+          <a class="contact-link" href={l.href} target="_blank" rel="noopener noreferrer">
+            <span>{l.label} <span style="opacity:0.6">— {l.handle}</span></span>
+            <span class="arrow">↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <Decor type="striped-circle" size={180} style="top: -40px; right: -50px; color: var(--paper);" />
+  <Decor type="zigzag" size={120} style="bottom: 8%; left: 4%; color: var(--paper);" />
+  <Decor type="sparkle" size={28} style="top: 20%; left: 40%; color: var(--paper);" class="float" />
+  <Decor type="sparkle" size={20} style="bottom: 24%; right: 14%; color: var(--paper);" class="float float-delay" />
+  <Decor type="open-circle" size={60} style="top: 60%; right: 8%; color: var(--paper);" />
+</section>

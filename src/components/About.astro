@@ -1,0 +1,43 @@
+---
+import Decor from './Decor.astro';
+---
+<section class="about" id="about">
+  <div class="container">
+    <span class="eyebrow">01 / The Garage</span>
+    <div class="about-grid" style="margin-top: 32px;">
+      <h2>
+        Built for<br />
+        <em>speed.</em>
+      </h2>
+      <div class="about-body">
+        <p>
+          K22B is a one-person web-dev garage out of Dhaka. We turn briefs into
+          shipped sites — no retainers, no committees, no slide decks about slide decks.
+        </p>
+        <p>
+          Founded in January 2026 by <em>Siam Rahman</em>, K22B exists for founders
+          and operators who'd rather have a live URL by next week than a roadmap by
+          next quarter.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">02</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Year founded</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">01</div>
+        <div class="stat-label">Founder, no middlemen</div>
+      </div>
+    </div>
+  </div>
+
+  <Decor type="striped-circle" size={140} style="top: 12%; right: -40px; color: var(--ink);" class="float" />
+  <Decor type="sparkle" size={22} style="bottom: 14%; right: 12%; color: var(--ink);" class="float float-delay" />
+</section>

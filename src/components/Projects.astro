@@ -1,0 +1,65 @@
+---
+import Decor from './Decor.astro';
+
+const projects = [
+  {
+    num: '01',
+    name: 'KSRML',
+    client: 'Keot-Khali Steel Re-Rolling Mills',
+    year: '2026',
+    tag: 'Industrial',
+    desc:
+      "Industrial gravity, made digital. A custom-spec steel rod showcase for a 25-year-old Bangladeshi mill — molten-metal hero, structured product runs, credibility on every scroll.",
+    href: 'https://ksrml.vercel.app/',
+  },
+  {
+    num: '02',
+    name: 'Flair Group',
+    client: 'Flair Group',
+    year: '2026',
+    tag: 'Corporate',
+    desc:
+      "Six divisions, one front door. A multi-sector corporate site for a Bangladeshi conglomerate — nut-bolts to telecom to apparel — unified under one clean, navigable identity.",
+    href: 'https://flairgroup.netlify.app/',
+  },
+];
+---
+<section class="projects" id="work">
+  <div class="container">
+    <div class="projects-head">
+      <div>
+        <span class="eyebrow">02 / Selected Work</span>
+        <h2 style="margin-top: 24px;">Shipped<br/><em>&amp; live.</em></h2>
+      </div>
+      <p>Two builds out the door, both live in production. Click through for the real thing.</p>
+    </div>
+
+    <div class="project-grid">
+      {projects.map((p) => (
+        <a class="project-card" href={p.href} target="_blank" rel="noopener noreferrer" aria-label={`${p.name} — open live site`}>
+          <div class="project-thumb">
+            <div class="project-thumb-grid"></div>
+            <span class="project-num">{p.num} / {p.tag}</span>
+            <div class="project-thumb-label">{p.name}</div>
+            <Decor type="sparkle" size={18} style="top: 14px; right: 16px; color: var(--ink);" />
+            <Decor type="zigzag" size={36} style="bottom: 14px; left: 14px; color: var(--ink);" />
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span>{p.client}</span>
+              <span>{p.year}</span>
+            </div>
+            <div class="project-name">{p.name}</div>
+            <p class="project-desc">{p.desc}</p>
+            <span class="project-link">
+              Visit live site <span class="arrow">→</span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <Decor type="open-circle" size={120} style="top: 8%; left: -30px; color: var(--ink);" />
+  <Decor type="sparkle" size={24} style="top: 22%; right: 6%; color: var(--ink);" class="float" />
+</section>

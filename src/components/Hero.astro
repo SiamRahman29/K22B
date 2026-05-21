@@ -1,0 +1,41 @@
+---
+import Decor from './Decor.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-title">
+        <span class="eyebrow">Est. 2026 / Dhaka / An initiative by Siam Rahman</span>
+        <h1 style="margin-top: 28px;">
+          <span>We Ship</span>
+          <span><span class="ink-fill">Web Fast.</span></span>
+        </h1>
+        <p class="hero-sub">
+          K22B is a <em>fast-shipping</em> web-dev garage. Briefs go in, live sites
+          come out — usually before the kickoff call cools off.
+        </p>
+        <div class="hero-meta">
+          <span class="tag">Web Design</span>
+          <span class="tag">Development</span>
+          <span class="tag">Fast Delivery</span>
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <Decor type="striped-circle" size={120} class="float" style="top: 6%; left: 4%; color: var(--ink);" />
+        <Decor type="zigzag" size={70} class="float float-delay" style="top: 14%; right: 4%; color: var(--ink);" />
+        <Decor type="sparkle" size={28} class="float" style="top: 40%; right: 0; color: var(--ink);" />
+        <Decor type="sparkle" size={20} class="float float-delay" style="bottom: 18%; left: 6%; color: var(--ink);" />
+        <Decor type="open-circle" size={64} style="bottom: 4%; right: 10%; color: var(--ink);" />
+        <Decor type="plus" size={18} style="top: 4%; right: 32%; color: var(--ink);" />
+        <img src={`${base}/logo.png`} alt="K22B planetary logo" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Edge decor scattered around hero -->
+  <Decor type="sparkle" size={22} style="top: 8%; left: 8%; color: var(--ink);" class="float" />
+  <Decor type="zigzag" size={50} style="bottom: 8%; left: 5%; color: var(--ink);" />
+  <Decor type="sparkle" size={16} style="bottom: 22%; left: 50%; color: var(--ink);" class="float float-delay" />
+</section>

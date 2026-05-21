@@ -1,0 +1,63 @@
+---
+// Geometric decoration primitives matching the K22B brand language.
+// Pass `type` plus inline style/class for positioning.
+interface Props {
+  type: 'sparkle' | 'zigzag' | 'striped-circle' | 'open-circle' | 'plus';
+  size?: number;
+  class?: string;
+  style?: string;
+  rotate?: number;
+}
+const { type, size = 48, rotate = 0, style = '', class: cls = '' } = Astro.props;
+const transform = rotate ? `transform: rotate(${rotate}deg); ${style}` : style;
+---
+{type === 'sparkle' && (
+  <span class={`decor ${cls}`} style={transform} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z" fill="currentColor"/>
+    </svg>
+  </span>
+)}
+
+{type === 'zigzag' && (
+  <span class={`decor ${cls}`} style={transform} aria-hidden="true">
+    <svg width={size * 1.6} height={size * 0.55} viewBox="0 0 80 28" fill="none">
+      <path d="M2 20 L14 4 L26 20 L38 4 L50 20 L62 4 L74 20" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+      <path d="M2 26 L14 10 L26 26 L38 10 L50 26 L62 10 L74 26" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none" opacity="0.55"/>
+    </svg>
+  </span>
+)}
+
+{type === 'striped-circle' && (
+  <span class={`decor ${cls}`} style={transform} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      <defs>
+        <pattern id={`stripes-${size}-${rotate}`} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+          <rect width="3" height="6" fill="currentColor"/>
+        </pattern>
+        <clipPath id={`clip-${size}-${rotate}`}>
+          <circle cx="50" cy="50" r="48"/>
+        </clipPath>
+      </defs>
+      <g clip-path={`url(#clip-${size}-${rotate})`}>
+        <rect width="100" height="100" fill={`url(#stripes-${size}-${rotate})`}/>
+      </g>
+    </svg>
+  </span>
+)}
+
+{type === 'open-circle' && (
+  <span class={`decor ${cls}`} style={transform} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3" fill="none"/>
+    </svg>
+  </span>
+)}
+
+{type === 'plus' && (
+  <span class={`decor ${cls}`} style={transform} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24">
+      <path d="M12 2 V22 M2 12 H22" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/>
+    </svg>
+  </span>
+)}
