@@ -1,0 +1,111 @@
+---
+import Decor from './Decor.astro';
+
+const tiers = [
+  {
+    slug: 'standard',
+    name: 'Standard',
+    tagline: 'Get online fast.',
+    price: '$399',
+    note: 'fixed',
+    features: [
+      'Up to 5 pages / sections',
+      'Static site — no CMS',
+      'Basic contact form',
+      '1 revision round',
+      '~10-day delivery',
+      'Hosted & deployed',
+    ],
+    cta: 'Start a build',
+    featured: false,
+  },
+  {
+    slug: 'slay',
+    name: 'Slay',
+    tagline: 'Get noticed.',
+    price: '$799',
+    note: 'fixed',
+    features: [
+      'Up to 10 pages / sections',
+      'CMS — edit your own content',
+      'Custom animations & interactions',
+      '2 revision rounds',
+      '~7-day delivery',
+      'Basic SEO + sitemap',
+      '2 weeks post-launch support',
+    ],
+    cta: 'Start a build',
+    featured: true,
+  },
+  {
+    slug: 'superb',
+    name: 'Superb',
+    tagline: 'Get ahead.',
+    price: '$1,499',
+    note: 'starting at',
+    features: [
+      'Unlimited scope — scoped together',
+      'Full CMS + custom integrations',
+      'Full motion & design system',
+      '3 revision rounds',
+      'Priority delivery — negotiated',
+      'Full SEO audit + analytics setup',
+      '1 month post-launch support',
+    ],
+    cta: 'Start a build',
+    featured: false,
+  },
+];
+---
+
+<section class="pricing" id="pricing">
+  <div class="container">
+    <span class="eyebrow">03 / Pick a build</span>
+    <div class="pricing-head" style="margin-top: 24px;">
+      <h2>Simple.<br /><em>Scoped.</em></h2>
+      <p class="pricing-sub">
+        Three tiers, zero templates. Pick the one that matches your scope —
+        or <a href="#contact">send a brief</a> and we'll figure it out together.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+      {tiers.map((t) => (
+        <div class:list={['pricing-card', t.featured && 'pricing-card--featured']}>
+          <div class="pricing-card-head">
+            <div class="pricing-tier-name">{t.name}</div>
+            <div class="pricing-tagline">{t.tagline}</div>
+          </div>
+
+          <div class="pricing-price-block">
+            <span class="pricing-note">{t.note}</span>
+            <div class="pricing-price">{t.price}</div>
+          </div>
+
+          <ul class="pricing-features">
+            {t.features.map((f) => (
+              <li>
+                <span class="pricing-check">+</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <a class="pricing-cta" href="#contact">
+            {t.cta} <span class="arrow">→</span>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <p class="pricing-footer-note">
+      All builds are custom — never templated. Price includes design, development, and deployment.
+      Have something unusual? <a href="#contact">Brief it anyway.</a>
+    </p>
+  </div>
+
+  <Decor type="open-circle" size={100} style="top: 6%; right: -24px; color: var(--ink);" class="float" />
+  <Decor type="zigzag" size={60} style="bottom: 12%; left: 3%; color: var(--ink);" />
+  <Decor type="sparkle" size={22} style="top: 30%; left: 8%; color: var(--ink);" class="float float-delay" />
+  <Decor type="sparkle" size={16} style="bottom: 28%; right: 8%; color: var(--ink);" class="float" />
+</section>
