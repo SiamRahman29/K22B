@@ -1,10 +1,10 @@
 import { defineConfig } from 'astro/config';
 
-// If hosted at https://<user>.github.io/K22B/, keep `base: '/K22B'`.
-// If you bind a custom domain or use a user/org pages site (root), set base to '/'.
+// Served from the custom domain k22b.space at root, so base is '/'.
+// If you ever revert to https://<user>.github.io/K22B/, set base back to '/K22B'.
 export default defineConfig({
-  site: 'https://siamrahman29.github.io',
-  base: '/K22B',
+  site: 'https://k22b.space',
+  base: '/',
   trailingSlash: 'ignore',
   build: {
     assets: 'assets',
