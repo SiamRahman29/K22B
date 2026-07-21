@@ -1,15 +1,15 @@
 # Vento showcase media
 
 Drop files here with the **exact names** below and they replace the placeholders
-on the `/vento` page automatically — no code changes. Any missing file just keeps
+on the `/vento` page automatically, no code changes needed. Any missing file just keeps
 its styled placeholder, so you can add media incrementally.
 
 ## Format guide
 
 - **Looping clips** (`*.mp4`): short, **silent**, **seamless loops**. They autoplay
-  muted with no controls — treat them like a moving screenshot, ~6–12s.
+  muted with no controls: treat them like a moving screenshot, ~6–12s.
   Export H.264 MP4, ~1280×800 (16:10) or 1600×900. Keep each under ~3–4 MB.
-- **The demo** (`demo.mp4`): a real video **with** playback controls — this one can
+- **The demo** (`demo.mp4`): a real video **with** playback controls. This one can
   have length and detail. See the shot list below.
 - **Screenshots** (`*.png`): crisp, high-DPI stills. Use a clean, realistic dataset.
   Hide anything you don't want public.
@@ -40,19 +40,19 @@ Record at a consistent window size and zoom so everything lines up. Retina/2× l
 
 ## Shot list (what to capture)
 
-- **hero.mp4** — a slow, calm pass over the dashboard: a gentle scroll or a couple
+- **hero.mp4**: a slow, calm pass over the dashboard: a gentle scroll or a couple
   of hovers. Ambient, not a task. This sets the tone; keep it smooth.
-- **inventory.mp4** — the raw-materials (or products) list: filter/search, then open
+- **inventory.mp4**: the raw-materials (or products) list: filter/search, then open
   one item so its unit **and** weight are visible.
-- **manufacture.mp4** — the hero flow: pick a product, enter a batch quantity, run it,
+- **manufacture.mp4**: the hero flow: pick a product, enter a batch quantity, run it,
   and let stock visibly deduct. This is the money shot.
-- **invoice.png** — a generated PDF invoice rendered on your letterhead (the branded
+- **invoice.png**: a generated PDF invoice rendered on your letterhead (the branded
   document, not the form).
-- **customers.mp4** — open a customer and scroll their sales history.
-- **roles.png** — the admin panel showing users with different role badges (or the
+- **customers.mp4**: open a customer and scroll their sales history.
+- **roles.png**: the admin panel showing users with different role badges (or the
   role dropdown open).
-- **history.mp4** — an item's activity timeline / a manufacture run's detail, scrolled.
-- **demo.mp4** — the full loop, ~60–90s: stock intake → build/confirm a recipe → run a
+- **history.mp4**: an item's activity timeline / a manufacture run's detail, scrolled.
+- **demo.mp4**: the full loop, ~60–90s: stock intake → build/confirm a recipe → run a
   manufacture batch → record a sale → download the branded invoice. Silent is fine;
   on-screen captions help. This is the one with controls, so it can breathe.
 - **gallery-1** products & recipes · **gallery-2** adjusting stock (clip) ·
