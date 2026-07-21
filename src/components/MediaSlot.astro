@@ -1,14 +1,14 @@
 ---
-// A media slot that showcases a photo, GIF, or demo video — styled in Vento's
+// A media slot that showcases a photo, GIF, or demo video, styled in Vento's
 // design language (soft rounded surfaces, subtle shadow, brand accents).
 //
 // It renders a polished placeholder by default. The moment you drop a real file
 // at `src` (see public/vento/README.md for the expected names), the slot detects
-// the successful load and swaps the placeholder for the media — no code changes.
+// the successful load and swaps the placeholder for the media. No code changes.
 //
 // Modes:
-//   chrome  — wraps the media in a faux browser window (dots + URL pill)
-//   bare    — no card/border/caption; fills a parent frame (used by the pinned
+//   chrome:   wraps the media in a faux browser window (dots + URL pill)
+//   bare:     no card/border/caption; fills a parent frame (used by the pinned
 //             scrollytelling panel, which supplies its own frame)
 interface Props {
   kind: 'video' | 'gif' | 'photo';
