@@ -1,0 +1,537 @@
+---
+import MediaSlot from '../components/MediaSlot.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const title = 'Vento — Inventory & Manufacturing, Under One Roof';
+const description =
+  'Vento is an inventory and manufacturing system: track stock by unit or weight, run recipe-driven production batches, and issue branded invoices. A K22B build.';
+const favicon =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c11318'/%3E%3Ctext x='16' y='23' font-family='Inter,Arial,sans-serif' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E";
+
+// Feature steps drive the pinned scrollytelling panel. Drop matching files into
+// public/vento/ (see public/vento/README.md) and they replace placeholders
+// automatically. `icon` holds lucide-style SVG path markup.
+const features = [
+  {
+    kicker: 'Inventory',
+    title: 'Stock, two ways at once',
+    body:
+      "Track raw materials and finished products by units, by weight, or by both at once. For dual-scale items, weight is the single source of truth — so unit counts are derived from it and never drift.",
+    url: 'vento.app/raw-materials',
+    icon: '<path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>',
+    media: { kind: 'video', loop: true, src: '/vento/inventory.mp4', label: 'Raw materials & products, by unit or weight', aspect: '16/10' },
+  },
+  {
+    kicker: 'Recipes → Manufacturing',
+    title: 'Recipes in, batches out',
+    body:
+      "Define what each product is made of, then run a production batch. Vento scales the recipe to the batch, deducts every raw material from stock, and accounts for input wastage and output defects — in one action.",
+    url: 'vento.app/manufacture',
+    icon: '<path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>',
+    media: { kind: 'video', loop: true, src: '/vento/manufacture.mp4', label: 'Running a manufacture batch', aspect: '16/10' },
+  },
+  {
+    kicker: 'Sales & Invoicing',
+    title: 'Branded invoices, on tap',
+    body:
+      "Record a sale and Vento prices it from your set prices — or a one-off override — then generates a PDF invoice or delivery receipt. Upload your letterhead once and every document renders onto it.",
+    url: 'vento.app/sales',
+    icon: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>',
+    media: { kind: 'photo', loop: false, src: '/vento/invoice.png', label: 'PDF invoice on a custom letterhead', aspect: '16/10' },
+  },
+  {
+    kicker: 'Customers',
+    title: 'A customer book that remembers',
+    body:
+      "Keep contacts with phone, email, and address, or ring up a quick walk-in sale. Every sale snapshots the customer as it happens, so history stays intact even after a record is edited or removed.",
+    url: 'vento.app/customers',
+    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    media: { kind: 'video', loop: true, src: '/vento/customers.mp4', label: 'Customer records & sales history', aspect: '16/10' },
+  },
+  {
+    kicker: 'Roles & Access',
+    title: 'The right eyes on the right numbers',
+    body:
+      "Five roles, from delivery driver to admin. Viewers read, operators and managers write and manufacture, admins manage users — and delivery drivers see the goods without ever seeing the pricing.",
+    url: 'vento.app/admin',
+    icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    media: { kind: 'photo', loop: false, src: '/vento/roles.png', label: 'Role-aware admin panel', aspect: '16/10' },
+  },
+  {
+    kicker: 'Audit Trail',
+    title: 'Every move, on the record',
+    body:
+      "Manufacture runs and stock adjustments are logged with name snapshots, quantities, and remarks. The paper trail survives edits and deletions, so you can always answer what happened to this stock, and when.",
+    url: 'vento.app/history',
+    icon: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',
+    media: { kind: 'video', loop: true, src: '/vento/history.mp4', label: 'Item activity & manufacture history', aspect: '16/10' },
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="vento-page">
+      <!-- Header -->
+      <header class="v-nav" data-nav>
+        <div class="v-wrap v-nav-inner">
+          <a class="v-brand" href="#top">
+            <span class="v-logo">V</span>
+            <span class="v-brand-word">Vento</span>
+          </a>
+          <nav class="v-nav-links" aria-label="Primary">
+            <a href="#features">Features</a>
+            <a href="#demo">Demo</a>
+            <a href="#gallery">Gallery</a>
+          </nav>
+          <div class="v-nav-cta">
+            <a class="v-btn v-btn-ghost v-hide-sm" href={`${base}/`}>Built by K22B</a>
+            <a class="v-btn v-btn-primary" href={`${base}/#contact`}>Talk to K22B</a>
+          </div>
+        </div>
+        <span class="v-progress" data-progress aria-hidden="true"></span>
+      </header>
+
+      <main>
+        <!-- Hero -->
+        <section class="v-hero" id="top">
+          <div class="v-hero-glow" data-parallax aria-hidden="true"></div>
+          <div class="v-wrap v-hero-inner">
+            <span class="v-eyebrow" data-reveal>A K22B build · Product</span>
+            <h1 class="v-hero-title">
+              <span class="v-line" data-reveal style="--d:1">Inventory &amp; manufacturing,</span>
+              <span class="v-line v-grad" data-reveal style="--d:2">under one roof.</span>
+            </h1>
+            <p class="v-hero-sub" data-reveal style="--d:3">
+              Vento runs the whole loop for a small manufacturer — track stock by
+              unit or weight, turn recipes into production batches, and issue
+              branded invoices, from raw material to sale.
+            </p>
+            <div class="v-hero-actions" data-reveal style="--d:4">
+              <a class="v-btn v-btn-primary v-btn-lg" href="#demo">See the demo</a>
+              <a class="v-btn v-btn-secondary v-btn-lg" href="#features">Explore features</a>
+            </div>
+
+            <div class="v-hero-media" data-reveal style="--d:5">
+              <MediaSlot kind="video" src="/vento/hero.mp4" poster="/vento/hero-poster.png" url="vento.app/dashboard" loop chrome aspect="16/10" />
+            </div>
+          </div>
+
+          <a class="v-scrollcue" href="#stats" aria-label="Scroll">
+            <span>Scroll</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </section>
+
+        <!-- Stat strip -->
+        <section class="v-stats-band" id="stats">
+          <div class="v-wrap v-stats">
+            <div class="v-stat" data-reveal style="--d:0"><div class="v-stat-num">2</div><div class="v-stat-label">Stock scales — units &amp; weight, together</div></div>
+            <div class="v-stat" data-reveal style="--d:1"><div class="v-stat-num">5</div><div class="v-stat-label">Access roles, from delivery to admin</div></div>
+            <div class="v-stat" data-reveal style="--d:2"><div class="v-stat-num">1</div><div class="v-stat-label">Loop — raw material to invoice</div></div>
+            <div class="v-stat" data-reveal style="--d:3"><div class="v-stat-num">∞</div><div class="v-stat-label">Audit history, snapshot-safe</div></div>
+          </div>
+        </section>
+
+        <!-- Dark cinematic statement -->
+        <section class="v-statement v-dark">
+          <div class="v-statement-glow" aria-hidden="true"></div>
+          <div class="v-wrap">
+            <span class="v-eyebrow v-eyebrow-light" data-reveal>One system</span>
+            <p class="v-statement-text">
+              <span data-reveal style="--d:0">From raw material</span>
+              <span data-reveal style="--d:1">to a finished invoice —</span>
+              <span class="v-grad" data-reveal style="--d:2">one place, no spreadsheets.</span>
+            </p>
+          </div>
+        </section>
+
+        <!-- Features: pinned scrollytelling -->
+        <section class="v-story" id="features">
+          <div class="v-wrap">
+            <div class="v-section-head" data-reveal>
+              <span class="v-eyebrow">Features</span>
+              <h2 class="v-h2">Everything from raw material to sale</h2>
+              <p class="v-lead">Six capabilities, one flow. Scroll to walk through each.</p>
+            </div>
+
+            <div class="v-story-grid">
+              <!-- Sticky product frame (desktop) -->
+              <div class="v-story-media" aria-hidden="true">
+                <div class="v-frame">
+                  <div class="v-frame-bar">
+                    <span class="media-dots"><i></i><i></i><i></i></span>
+                    <span class="v-frame-url" data-frame-url>vento.app</span>
+                  </div>
+                  <div class="v-frame-body">
+                    {features.map((f, i) => (
+                      <div class:list={["v-layer", { "is-active": i === 0 }]} data-layer>
+                        <MediaSlot kind={f.media.kind as 'video' | 'gif' | 'photo'} src={f.media.src} loop={f.media.loop} aspect="16/10" bare />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Steps -->
+              <div class="v-story-steps">
+                {features.map((f, i) => (
+                  <article class:list={["v-step", { "is-active": i === 0 }]} data-step={i} data-url={f.url}>
+                    <span class="v-feature-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={f.icon} />
+                    </span>
+                    <span class="v-kicker">{f.kicker}</span>
+                    <h3 class="v-feature-title">{f.title}</h3>
+                    <p class="v-feature-body">{f.body}</p>
+                    <!-- Inline media (mobile only) -->
+                    <div class="v-step-media">
+                      <MediaSlot kind={f.media.kind as 'video' | 'gif' | 'photo'} src={f.media.src} loop={f.media.loop} label={f.media.label} url={f.url} chrome aspect="16/10" />
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Demo: dark cinematic -->
+        <section class="v-demo v-dark" id="demo">
+          <div class="v-demo-glow" aria-hidden="true"></div>
+          <div class="v-wrap">
+            <div class="v-section-head v-section-head--center" data-reveal>
+              <span class="v-eyebrow v-eyebrow-light">See it move</span>
+              <h2 class="v-h2 v-h2-light">The full walkthrough</h2>
+              <p class="v-lead v-lead-light">A guided run from stock intake to a finished invoice.</p>
+            </div>
+            <div class="v-demo-media" data-reveal>
+              <MediaSlot kind="video" src="/vento/demo.mp4" poster="/vento/demo-poster.png" url="vento.app · demo" chrome aspect="16/9" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="v-section" id="gallery">
+          <div class="v-wrap">
+            <div class="v-section-head" data-reveal>
+              <span class="v-eyebrow">Gallery</span>
+              <h2 class="v-h2">In the wild</h2>
+              <p class="v-lead">Screens and clips from across the app — drop in whatever shows it best.</p>
+            </div>
+            <div class="v-gallery">
+              <div class="v-gitem" data-reveal style="--d:0"><MediaSlot kind="photo" src="/vento/gallery-1.png" label="Products & recipes" aspect="4/3" /></div>
+              <div class="v-gitem" data-reveal style="--d:1"><MediaSlot kind="video" loop src="/vento/gallery-2.mp4" label="Adjusting stock" aspect="4/3" /></div>
+              <div class="v-gitem" data-reveal style="--d:2"><MediaSlot kind="photo" src="/vento/gallery-3.png" label="Sales & delivery receipts" aspect="4/3" /></div>
+              <div class="v-gitem" data-reveal style="--d:0"><MediaSlot kind="photo" src="/vento/gallery-4.png" label="Categories" aspect="4/3" /></div>
+              <div class="v-gitem" data-reveal style="--d:1"><MediaSlot kind="video" loop src="/vento/gallery-5.mp4" label="Language switch" aspect="4/3" /></div>
+              <div class="v-gitem" data-reveal style="--d:2"><MediaSlot kind="photo" src="/vento/gallery-6.png" label="Admin & settings" aspect="4/3" /></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA band -->
+        <section class="v-cta">
+          <div class="v-wrap v-cta-inner">
+            <div data-reveal>
+              <h2 class="v-cta-title">Want a system like Vento?</h2>
+              <p class="v-cta-sub">K22B builds custom operations software — briefs in, working systems out.</p>
+            </div>
+            <div class="v-cta-actions" data-reveal style="--d:1">
+              <a class="v-btn v-btn-invert v-btn-lg" href={`${base}/#contact`}>Start a build</a>
+              <a class="v-btn v-btn-outline-light v-btn-lg" href={`${base}/`}>Back to K22B</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="v-footer">
+        <div class="v-wrap v-footer-inner">
+          <span class="v-footer-brand"><span class="v-logo v-logo-sm">V</span> Vento</span>
+          <span>A K22B build · Dhaka, Bangladesh</span>
+        </div>
+      </footer>
+    </div>
+
+    <style is:global>
+      /* ---------- Vento design tokens (ported from vento-frontend) ---------- */
+      .vento-page {
+        --color-brand-50: #fdecec; --color-brand-100: #f9cfd0;
+        --color-brand-500: #c11318; --color-brand-600: #a2181a; --color-brand-700: #861416; --color-brand-800: #6b1011;
+        --color-accent-50: #fdf6e7; --color-accent-400: #e89a2c; --color-accent-500: #c87d18; --color-accent-600: #9d5f10;
+        --color-ink: #0b0f14; --color-ink-soft: #1f2937; --color-mute: #5b6573; --color-mute-soft: #93a0b1;
+        --color-line: #e5e7eb; --color-line-soft: #f1f3f6;
+        --color-paper: #f7f6f2; --color-paper-soft: #fbfaf7; --color-surface: #ffffff;
+        --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px; --radius-xl: 24px;
+        --shadow-card: 0 1px 2px 0 rgb(11 15 20 / 0.04), 0 1px 1px 0 rgb(11 15 20 / 0.04);
+        --shadow-lift: 0 8px 24px -8px rgb(11 15 20 / 0.12), 0 2px 6px -2px rgb(11 15 20 / 0.08);
+        --shadow-xl: 0 40px 80px -24px rgb(11 15 20 / 0.32), 0 12px 32px -12px rgb(11 15 20 / 0.22);
+        --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        --font-sans: "Inter", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+        --v-max: 1120px; --v-pad: clamp(20px, 4vw, 40px);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+      body { margin: 0; }
+
+      .vento-page {
+        background: var(--color-paper-soft); color: var(--color-ink);
+        font-family: var(--font-sans); font-feature-settings: "ss01", "cv11";
+        line-height: 1.55; text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+      }
+      .vento-page a { color: inherit; text-decoration: none; }
+      .vento-page img { display: block; max-width: 100%; height: auto; }
+      .vento-page ::selection { background: var(--color-brand-100); color: var(--color-ink); }
+      .vento-page :focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; border-radius: 2px; }
+      .vento-page h1, .vento-page h2, .vento-page h3 { margin: 0; letter-spacing: -0.02em; }
+      .vento-page p { margin: 0; }
+
+      .v-wrap { width: 100%; max-width: var(--v-max); margin: 0 auto; padding-left: var(--v-pad); padding-right: var(--v-pad); }
+
+      /* ---------- scroll reveal ---------- */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.7s var(--ease-out-quart), transform 0.7s var(--ease-out-quart);
+        transition-delay: calc(var(--d, 0) * 80ms);
+        will-change: opacity, transform;
+      }
+      [data-reveal].is-visible { opacity: 1; transform: none; }
+
+      /* ---------- eyebrow / headings ---------- */
+      .v-eyebrow { display: inline-block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-brand-600); }
+      .v-eyebrow-light { color: var(--color-accent-400); }
+      .v-h2 { margin-top: 14px; font-size: clamp(28px, 4vw, 42px); font-weight: 600; line-height: 1.1; }
+      .v-h2-light { color: #fff; }
+      .v-lead { margin-top: 12px; font-size: clamp(16px, 1.4vw, 18px); color: var(--color-mute); max-width: 56ch; }
+      .v-lead-light { color: rgb(255 255 255 / 0.7); }
+      .v-grad {
+        background: linear-gradient(100deg, var(--color-brand-500) 0%, var(--color-accent-400) 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+
+      /* ---------- buttons ---------- */
+      .v-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; padding: 9px 16px; border: 1px solid transparent; transition: background-color 0.18s var(--ease-out-quart), color 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s; cursor: pointer; white-space: nowrap; }
+      .v-btn-lg { padding: 12px 22px; font-size: 15px; }
+      .v-btn-primary { background: var(--color-brand-500); color: #fff; box-shadow: 0 6px 18px -8px rgb(193 19 24 / 0.6); }
+      .v-btn-primary:hover { background: var(--color-brand-700); transform: translateY(-1px); box-shadow: 0 10px 24px -8px rgb(193 19 24 / 0.55); }
+      .v-btn-secondary { background: var(--color-surface); color: var(--color-ink-soft); border-color: var(--color-line); }
+      .v-btn-secondary:hover { background: var(--color-line-soft); transform: translateY(-1px); }
+      .v-btn-ghost { background: transparent; color: var(--color-mute); }
+      .v-btn-ghost:hover { color: var(--color-ink); background: var(--color-line-soft); }
+      .v-btn-invert { background: #fff; color: var(--color-brand-700); }
+      .v-btn-invert:hover { background: var(--color-brand-50); transform: translateY(-1px); }
+      .v-btn-outline-light { background: transparent; color: #fff; border-color: rgb(255 255 255 / 0.5); }
+      .v-btn-outline-light:hover { background: rgb(255 255 255 / 0.12); border-color: #fff; }
+
+      /* ---------- header ---------- */
+      .v-nav { position: sticky; top: 0; z-index: 50; background: rgb(251 250 247 / 0.72); backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s; }
+      .v-nav.is-scrolled { border-bottom-color: var(--color-line); box-shadow: 0 1px 0 rgb(11 15 20 / 0.02), 0 6px 24px -18px rgb(11 15 20 / 0.5); }
+      .v-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 64px; }
+      .v-brand { display: inline-flex; align-items: center; gap: 10px; }
+      .v-logo { display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--color-brand-500); color: #fff; font-weight: 700; font-size: 16px; box-shadow: 0 4px 12px -4px rgb(193 19 24 / 0.5); }
+      .v-logo-sm { width: 24px; height: 24px; font-size: 13px; border-radius: var(--radius-sm); box-shadow: none; }
+      .v-brand-word { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+      .v-nav-links { display: none; gap: 4px; }
+      .v-nav-links a { padding: 8px 12px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; color: var(--color-mute); transition: color 0.15s, background-color 0.15s; }
+      .v-nav-links a:hover { color: var(--color-ink); background: var(--color-line-soft); }
+      .v-nav-cta { display: inline-flex; align-items: center; gap: 8px; }
+      @media (min-width: 860px) { .v-nav-links { display: inline-flex; } }
+      @media (max-width: 560px) { .v-hide-sm { display: none; } }
+      .v-progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-400)); }
+
+      /* ---------- hero ---------- */
+      .v-hero { position: relative; overflow: hidden; padding: clamp(52px, 9vw, 104px) 0 clamp(48px, 7vw, 88px); text-align: center; }
+      .v-hero-glow { position: absolute; top: -20%; left: 50%; width: min(1100px, 130vw); height: 720px; transform: translateX(-50%); background: radial-gradient(45% 45% at 50% 40%, rgb(193 19 24 / 0.16), transparent 70%), radial-gradient(40% 40% at 30% 30%, rgb(232 154 44 / 0.16), transparent 70%); filter: blur(10px); pointer-events: none; z-index: 0; }
+      .v-hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+      .v-hero-title { margin-top: 20px; font-size: clamp(38px, 6.4vw, 68px); font-weight: 700; line-height: 1.03; letter-spacing: -0.03em; max-width: 16ch; }
+      .v-line { display: block; }
+      .v-hero-sub { margin-top: 22px; font-size: clamp(16px, 1.6vw, 20px); color: var(--color-mute); max-width: 56ch; }
+      .v-hero-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+      .v-hero-media { margin-top: clamp(40px, 6vw, 72px); width: 100%; max-width: 960px; }
+      .v-hero-media :global(.media--chrome) { box-shadow: var(--shadow-xl); }
+      .v-scrollcue { position: relative; z-index: 1; margin: clamp(28px, 4vw, 44px) auto 0; display: inline-flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-mute); width: 100%; }
+      .v-scrollcue svg { animation: v-bounce 1.8s var(--ease-out-quart) infinite; }
+      @keyframes v-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+      /* ---------- stat band ---------- */
+      .v-stats-band { border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); background: var(--color-surface); }
+      .v-stats { display: grid; grid-template-columns: repeat(2, 1fr); }
+      @media (min-width: 760px) { .v-stats { grid-template-columns: repeat(4, 1fr); } }
+      .v-stat { padding: 28px 8px; }
+      @media (min-width: 760px) { .v-stat { padding: 40px 24px; } }
+      .v-stat-num { font-size: clamp(38px, 5vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--color-brand-600); }
+      .v-stat-label { margin-top: 10px; font-size: 13px; color: var(--color-mute); max-width: 22ch; }
+
+      /* ---------- dark sections ---------- */
+      .v-dark { position: relative; overflow: hidden; background: radial-gradient(120% 120% at 50% 0%, #12181f 0%, var(--color-ink) 60%); color: #fff; }
+
+      .v-statement { padding: clamp(80px, 14vw, 180px) 0; text-align: center; }
+      .v-statement-glow { position: absolute; inset: 0; background: radial-gradient(50% 60% at 50% 120%, rgb(193 19 24 / 0.22), transparent 70%); pointer-events: none; }
+      .v-statement .v-wrap { position: relative; }
+      .v-statement-text { margin-top: 24px; font-size: clamp(30px, 5.4vw, 62px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
+      .v-statement-text span { display: block; }
+
+      /* ---------- story / scrollytelling ---------- */
+      .v-story { padding: clamp(64px, 10vw, 120px) 0; }
+      .v-section-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 56px); }
+      .v-section-head--center { margin-left: auto; margin-right: auto; text-align: center; }
+      .v-section-head--center .v-lead { margin-left: auto; margin-right: auto; }
+
+      .v-story-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+      @media (min-width: 900px) { .v-story-grid { grid-template-columns: 1.05fr 0.95fr; gap: clamp(40px, 5vw, 80px); align-items: start; } }
+
+      .v-story-media { display: none; }
+      @media (min-width: 900px) { .v-story-media { display: block; position: sticky; top: 96px; } }
+      .v-frame { border: 1px solid var(--color-line); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-xl); overflow: hidden; }
+      .v-frame-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--color-paper-soft); border-bottom: 1px solid var(--color-line); }
+      .media-dots { display: inline-flex; gap: 6px; }
+      .media-dots i { width: 11px; height: 11px; border-radius: 999px; display: block; }
+      .media-dots i:nth-child(1) { background: #ff5f57; } .media-dots i:nth-child(2) { background: #febc2e; } .media-dots i:nth-child(3) { background: #28c840; }
+      .v-frame-url { flex: 1; text-align: center; font-family: var(--font-mono); font-size: 12px; color: var(--color-mute); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 999px; padding: 5px 14px; max-width: 300px; margin: 0 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.3s; }
+      .v-frame-body { position: relative; aspect-ratio: 16 / 10; }
+      .v-layer { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity 0.6s var(--ease-out-quart), transform 0.6s var(--ease-out-quart); pointer-events: none; }
+      .v-layer.is-active { opacity: 1; transform: none; }
+
+      .v-story-steps { display: flex; flex-direction: column; gap: clamp(48px, 9vw, 108px); }
+      @media (min-width: 900px) { .v-story-steps { gap: 0; } .v-step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; padding: 24px 0; } }
+      .v-feature-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-brand-50); color: var(--color-brand-500); margin-bottom: 16px; transition: transform 0.4s var(--ease-out-quart); }
+      .v-kicker { display: block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-brand-600); }
+      .v-feature-title { margin-top: 10px; font-size: clamp(24px, 3vw, 34px); font-weight: 600; line-height: 1.12; }
+      .v-feature-body { margin-top: 14px; font-size: clamp(15px, 1.3vw, 17px); color: var(--color-mute); max-width: 48ch; }
+      /* On desktop, non-active steps dim to focus the reader */
+      @media (min-width: 900px) {
+        .v-step { opacity: 0.42; transition: opacity 0.4s var(--ease-out-quart); }
+        .v-step.is-active { opacity: 1; }
+        .v-step.is-active .v-feature-icon { transform: scale(1.06); }
+        .v-step-media { display: none; }
+      }
+      .v-step-media { margin-top: 22px; }
+
+      /* ---------- demo ---------- */
+      .v-demo { padding: clamp(64px, 10vw, 128px) 0; }
+      .v-demo-glow { position: absolute; top: 30%; left: 50%; width: min(900px, 110vw); height: 500px; transform: translateX(-50%); background: radial-gradient(50% 50% at 50% 50%, rgb(193 19 24 / 0.28), transparent 70%); filter: blur(20px); pointer-events: none; }
+      .v-demo .v-wrap { position: relative; }
+      .v-demo-media { max-width: 940px; margin: clamp(36px, 5vw, 56px) auto 0; transform: translateY(26px) scale(0.96); opacity: 0; transition: opacity 0.9s var(--ease-out-quart), transform 0.9s var(--ease-out-quart); }
+      .v-demo-media.is-visible { opacity: 1; transform: none; }
+      .v-demo-media :global(.media--chrome) { box-shadow: var(--shadow-xl); border-color: rgb(255 255 255 / 0.1); }
+      .v-demo-media :global(.media-bar) { background: #12181f; }
+      .v-demo-media :global(.media-url) { background: #1b2531; border-color: rgb(255 255 255 / 0.08); color: var(--color-mute-soft); }
+
+      /* ---------- gallery ---------- */
+      .v-section { padding: clamp(64px, 10vw, 120px) 0; }
+      .v-gallery { display: grid; grid-template-columns: 1fr; gap: clamp(18px, 2.5vw, 28px); }
+      @media (min-width: 620px) { .v-gallery { grid-template-columns: repeat(2, 1fr); } }
+      @media (min-width: 940px) { .v-gallery { grid-template-columns: repeat(3, 1fr); } }
+      .v-gitem :global(.media-frame) { transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart); }
+      .v-gitem:hover :global(.media-frame) { transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+
+      /* ---------- CTA band ---------- */
+      .v-cta { background: linear-gradient(120deg, var(--color-brand-600), var(--color-brand-500) 60%, var(--color-accent-500)); color: #fff; }
+      .v-cta-inner { padding: clamp(48px, 7vw, 88px) var(--v-pad); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
+      .v-cta-title { font-size: clamp(26px, 3.6vw, 42px); font-weight: 600; }
+      .v-cta-sub { margin-top: 10px; color: rgb(255 255 255 / 0.85); font-size: clamp(15px, 1.4vw, 18px); max-width: 44ch; }
+      .v-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+      /* ---------- footer ---------- */
+      .v-footer { background: var(--color-surface); border-top: 1px solid var(--color-line); }
+      .v-footer-inner { padding: 24px var(--v-pad); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--color-mute); }
+      .v-footer-brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--color-ink); }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        [data-reveal], .v-demo-media { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .v-scrollcue svg { animation: none; }
+        .v-step { opacity: 1 !important; }
+      }
+    </style>
+
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 1) Scroll-reveal
+      const revealEls = document.querySelectorAll<HTMLElement>('[data-reveal], .v-demo-media');
+      if (reduce) {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      } else if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.15 },
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      // 2) Pinned scrollytelling — swap active media layer as each step centers
+      const steps = Array.from(document.querySelectorAll<HTMLElement>('.v-step'));
+      const layers = Array.from(document.querySelectorAll<HTMLElement>('[data-layer]'));
+      const frameUrl = document.querySelector<HTMLElement>('[data-frame-url]');
+      const setActive = (i: number) => {
+        steps.forEach((s, k) => s.classList.toggle('is-active', k === i));
+        layers.forEach((l, k) => {
+          const on = k === i;
+          l.classList.toggle('is-active', on);
+          // Only the visible layer's clip plays — save CPU/bandwidth on the rest.
+          const vid = l.querySelector('video');
+          if (vid) { if (on) vid.play?.().catch(() => {}); else vid.pause?.(); }
+        });
+        if (frameUrl && steps[i]) frameUrl.textContent = steps[i].dataset.url ?? 'vento.app';
+      };
+      if (steps.length && 'IntersectionObserver' in window) {
+        const stepIO = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
+            });
+          },
+          { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+        );
+        steps.forEach((s) => stepIO.observe(s));
+      }
+
+      // 3) Scroll progress bar + nav state + hero parallax (rAF-throttled)
+      const bar = document.querySelector<HTMLElement>('[data-progress]');
+      const nav = document.querySelector<HTMLElement>('[data-nav]');
+      const glow = document.querySelector<HTMLElement>('[data-parallax]');
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          if (bar) bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
+          if (nav) nav.classList.toggle('is-scrolled', y > 8);
+          if (glow && !reduce) glow.style.transform = `translateX(-50%) translateY(${y * 0.14}px)`;
+          ticking = false;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>
