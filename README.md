@@ -2,7 +2,7 @@
 
 **Live site → [siamrahman29.github.io/K22B](https://siamrahman29.github.io/K22B/)**
 
-We ship web fast. K22B is a fast-shipping web-dev garage out of Dhaka — briefs go in, live sites come out. No retainers, no committees, no slide decks about slide decks.
+We ship web fast. K22B is a fast-shipping web-dev garage out of Dhaka: briefs go in, live sites come out. No retainers, no committees, no slide decks about slide decks.
 
 Founded in 2026 by Siam Rahman. You talk straight to the person building your site: zero middlemen.
 
