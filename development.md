@@ -1,6 +1,6 @@
 # Development
 
-The website for **K22B** — a fast-shipping web-dev garage. Built with [Astro](https://astro.build/), hosted on GitHub Pages.
+The website for **K22B**, a fast-shipping web-dev garage. Built with [Astro](https://astro.build/), hosted on GitHub Pages.
 
 ## Develop
 
