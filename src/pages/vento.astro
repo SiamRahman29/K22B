@@ -2,7 +2,7 @@
 import MediaSlot from '../components/MediaSlot.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const title = 'Vento — Inventory & Manufacturing, Under One Roof';
+const title = 'Vento: Inventory & Manufacturing, Under One Roof';
 const description =
   'Vento is an inventory and manufacturing system: track stock by unit or weight, run recipe-driven production batches, and issue branded invoices. A K22B build.';
 const favicon =
@@ -16,7 +16,7 @@ const features = [
     kicker: 'Inventory',
     title: 'Stock, two ways at once',
     body:
-      "Track raw materials and finished products by units, by weight, or by both at once. For dual-scale items, weight is the single source of truth — so unit counts are derived from it and never drift.",
+      "Track raw materials and finished products by units, by weight, or by both at once. For dual-scale items, weight is the single source of truth, so unit counts are derived from it and never drift.",
     url: 'vento.app/raw-materials',
     icon: '<path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>',
     media: { kind: 'video', loop: true, src: '/vento/inventory.mp4', label: 'Raw materials & products, by unit or weight', aspect: '16/10' },
@@ -25,7 +25,7 @@ const features = [
     kicker: 'Recipes → Manufacturing',
     title: 'Recipes in, batches out',
     body:
-      "Define what each product is made of, then run a production batch. Vento scales the recipe to the batch, deducts every raw material from stock, and accounts for input wastage and output defects — in one action.",
+      "Define what each product is made of, then run a production batch. In one action, Vento scales the recipe to the batch, deducts every raw material from stock, and accounts for input wastage and output defects.",
     url: 'vento.app/manufacture',
     icon: '<path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>',
     media: { kind: 'video', loop: true, src: '/vento/manufacture.mp4', label: 'Running a manufacture batch', aspect: '16/10' },
@@ -34,7 +34,7 @@ const features = [
     kicker: 'Sales & Invoicing',
     title: 'Branded invoices, on tap',
     body:
-      "Record a sale and Vento prices it from your set prices — or a one-off override — then generates a PDF invoice or delivery receipt. Upload your letterhead once and every document renders onto it.",
+      "Record a sale and Vento prices it from your set prices (or a one-off override), then generates a PDF invoice or delivery receipt. Upload your letterhead once and every document renders onto it.",
     url: 'vento.app/sales',
     icon: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>',
     media: { kind: 'photo', loop: false, src: '/vento/invoice.png', label: 'PDF invoice on a custom letterhead', aspect: '16/10' },
@@ -52,7 +52,7 @@ const features = [
     kicker: 'Roles & Access',
     title: 'The right eyes on the right numbers',
     body:
-      "Five roles, from delivery driver to admin. Viewers read, operators and managers write and manufacture, admins manage users — and delivery drivers see the goods without ever seeing the pricing.",
+      "Five roles, from delivery driver to admin. Viewers read, operators and managers write and manufacture, admins manage users, and delivery drivers see the goods without ever seeing the pricing.",
     url: 'vento.app/admin',
     icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
     media: { kind: 'photo', loop: false, src: '/vento/roles.png', label: 'Role-aware admin panel', aspect: '16/10' },
@@ -114,13 +114,13 @@ const features = [
         <section class="v-hero" id="top">
           <div class="v-hero-glow" data-parallax aria-hidden="true"></div>
           <div class="v-wrap v-hero-inner">
-            <span class="v-eyebrow" data-reveal>A K22B build · Product</span>
+            <span class="v-eyebrow" data-reveal>A K22B Product</span>
             <h1 class="v-hero-title">
               <span class="v-line" data-reveal style="--d:1">Inventory &amp; manufacturing,</span>
               <span class="v-line v-grad" data-reveal style="--d:2">under one roof.</span>
             </h1>
             <p class="v-hero-sub" data-reveal style="--d:3">
-              Vento runs the whole loop for a small manufacturer — track stock by
+              Vento runs the whole loop for a small manufacturer: track stock by
               unit or weight, turn recipes into production batches, and issue
               branded invoices, from raw material to sale.
             </p>
@@ -143,9 +143,9 @@ const features = [
         <!-- Stat strip -->
         <section class="v-stats-band" id="stats">
           <div class="v-wrap v-stats">
-            <div class="v-stat" data-reveal style="--d:0"><div class="v-stat-num">2</div><div class="v-stat-label">Stock scales — units &amp; weight, together</div></div>
+            <div class="v-stat" data-reveal style="--d:0"><div class="v-stat-num">2</div><div class="v-stat-label">Stock scales: units &amp; weight, together</div></div>
             <div class="v-stat" data-reveal style="--d:1"><div class="v-stat-num">5</div><div class="v-stat-label">Access roles, from delivery to admin</div></div>
-            <div class="v-stat" data-reveal style="--d:2"><div class="v-stat-num">1</div><div class="v-stat-label">Loop — raw material to invoice</div></div>
+            <div class="v-stat" data-reveal style="--d:2"><div class="v-stat-num">1</div><div class="v-stat-label">Loop, raw material to invoice</div></div>
             <div class="v-stat" data-reveal style="--d:3"><div class="v-stat-num">∞</div><div class="v-stat-label">Audit history, snapshot-safe</div></div>
           </div>
         </section>
@@ -157,7 +157,7 @@ const features = [
             <span class="v-eyebrow v-eyebrow-light" data-reveal>One system</span>
             <p class="v-statement-text">
               <span data-reveal style="--d:0">From raw material</span>
-              <span data-reveal style="--d:1">to a finished invoice —</span>
+              <span data-reveal style="--d:1">to a finished invoice:</span>
               <span class="v-grad" data-reveal style="--d:2">one place, no spreadsheets.</span>
             </p>
           </div>
@@ -232,7 +232,7 @@ const features = [
             <div class="v-section-head" data-reveal>
               <span class="v-eyebrow">Gallery</span>
               <h2 class="v-h2">In the wild</h2>
-              <p class="v-lead">Screens and clips from across the app — drop in whatever shows it best.</p>
+              <p class="v-lead">Screens and clips from across the app. Drop in whatever shows it best.</p>
             </div>
             <div class="v-gallery">
               <div class="v-gitem" data-reveal style="--d:0"><MediaSlot kind="photo" src="/vento/gallery-1.png" label="Products & recipes" aspect="4/3" /></div>
@@ -250,7 +250,7 @@ const features = [
           <div class="v-wrap v-cta-inner">
             <div data-reveal>
               <h2 class="v-cta-title">Want a system like Vento?</h2>
-              <p class="v-cta-sub">K22B builds custom operations software — briefs in, working systems out.</p>
+              <p class="v-cta-sub">K22B builds custom operations software: briefs in, working systems out.</p>
             </div>
             <div class="v-cta-actions" data-reveal style="--d:1">
               <a class="v-btn v-btn-invert v-btn-lg" href={`${base}/#contact`}>Start a build</a>
@@ -360,9 +360,12 @@ const features = [
       .v-progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-400)); }
 
       /* ---------- hero ---------- */
-      .v-hero { position: relative; overflow: hidden; padding: clamp(52px, 9vw, 104px) 0 clamp(48px, 7vw, 88px); text-align: center; }
+      /* Hero fills the viewport below the 64px sticky nav, so only the hero is
+         visible on landing and the section below never peeks in. Content taller
+         than the viewport just overflows the min-height, never clipped. */
+      .v-hero { position: relative; overflow: hidden; min-height: calc(100svh - 64px); display: flex; flex-direction: column; padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 2.5vw, 36px); text-align: center; }
       .v-hero-glow { position: absolute; top: -20%; left: 50%; width: min(1100px, 130vw); height: 720px; transform: translateX(-50%); background: radial-gradient(45% 45% at 50% 40%, rgb(193 19 24 / 0.16), transparent 70%), radial-gradient(40% 40% at 30% 30%, rgb(232 154 44 / 0.16), transparent 70%); filter: blur(10px); pointer-events: none; z-index: 0; }
-      .v-hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+      .v-hero-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
       .v-hero-title { margin-top: 20px; font-size: clamp(38px, 6.4vw, 68px); font-weight: 700; line-height: 1.03; letter-spacing: -0.03em; max-width: 16ch; }
       .v-line { display: block; }
       .v-hero-sub { margin-top: 22px; font-size: clamp(16px, 1.6vw, 20px); color: var(--color-mute); max-width: 56ch; }
@@ -486,7 +489,7 @@ const features = [
         revealEls.forEach((el) => el.classList.add('is-visible'));
       }
 
-      // 2) Pinned scrollytelling — swap active media layer as each step centers
+      // 2) Pinned scrollytelling: swap active media layer as each step centers
       const steps = Array.from(document.querySelectorAll<HTMLElement>('.v-step'));
       const layers = Array.from(document.querySelectorAll<HTMLElement>('[data-layer]'));
       const frameUrl = document.querySelector<HTMLElement>('[data-frame-url]');
@@ -495,7 +498,7 @@ const features = [
         layers.forEach((l, k) => {
           const on = k === i;
           l.classList.toggle('is-active', on);
-          // Only the visible layer's clip plays — save CPU/bandwidth on the rest.
+          // Only the visible layer's clip plays, saving CPU/bandwidth on the rest.
           const vid = l.querySelector('video');
           if (vid) { if (on) vid.play?.().catch(() => {}); else vid.pause?.(); }
         });
