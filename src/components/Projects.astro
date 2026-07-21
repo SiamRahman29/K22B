@@ -1,6 +1,8 @@
 ---
 import Decor from './Decor.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const projects = [
   {
     num: '01',
@@ -11,6 +13,7 @@ const projects = [
     desc:
       "Industrial gravity, made digital. A custom-spec steel rod showcase for a 25-year-old Bangladeshi mill — molten-metal hero, structured product runs, credibility on every scroll.",
     href: 'https://ksrml.vercel.app/',
+    internal: false,
   },
   {
     num: '02',
@@ -21,6 +24,18 @@ const projects = [
     desc:
       "Six divisions, one front door. A multi-sector corporate site for a Bangladeshi conglomerate — nut-bolts to telecom to apparel — unified under one clean, navigable identity.",
     href: 'https://flairgroup.netlify.app/',
+    internal: false,
+  },
+  {
+    num: '03',
+    name: 'Vento',
+    client: 'Product',
+    year: '2026',
+    tag: 'Product',
+    desc:
+      "Inventory & manufacturing, under one roof. Track stock by unit or weight, turn recipes into production batches, and issue branded invoices — one system from raw material to sale.",
+    href: `${base}/vento`,
+    internal: true,
   },
 ];
 ---
@@ -36,7 +51,13 @@ const projects = [
 
     <div class="project-grid">
       {projects.map((p) => (
-        <a class="project-card" href={p.href} target="_blank" rel="noopener noreferrer" aria-label={`${p.name} — open live site`}>
+        <a
+          class="project-card"
+          href={p.href}
+          target={p.internal ? undefined : '_blank'}
+          rel={p.internal ? undefined : 'noopener noreferrer'}
+          aria-label={p.internal ? `${p.name} — view feature showcase` : `${p.name} — open live site`}
+        >
           <div class="project-thumb">
             <div class="project-thumb-grid"></div>
             <span class="project-num">{p.num} / {p.tag}</span>
@@ -52,7 +73,7 @@ const projects = [
             <div class="project-name">{p.name}</div>
             <p class="project-desc">{p.desc}</p>
             <span class="project-link">
-              Visit live site <span class="arrow">→</span>
+              {p.internal ? 'View showcase' : 'Visit live site'} <span class="arrow">→</span>
             </span>
           </div>
         </a>
