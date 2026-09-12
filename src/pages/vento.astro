@@ -394,8 +394,11 @@ const sections = [
       .vento-page img { display: block; max-width: 100%; height: auto; }
       .vento-page ::selection { background: var(--color-brand-100); color: var(--color-ink); }
       .vento-page :focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; border-radius: 2px; }
-      .vento-page h1, .vento-page h2, .vento-page h3 { margin: 0; letter-spacing: -0.02em; }
-      .vento-page p { margin: 0; }
+      /* Zero specificity via :where(), so component rules like .v-hero-sub
+         { margin-top } win. A plain `.vento-page p` would outrank them and
+         silently zero every heading and paragraph margin on the page. */
+      :where(.vento-page) :where(h1, h2, h3) { margin: 0; letter-spacing: -0.02em; }
+      :where(.vento-page) :where(p) { margin: 0; }
 
       .v-wrap { width: 100%; max-width: var(--v-max); margin: 0 auto; padding-left: var(--v-pad); padding-right: var(--v-pad); }
 
