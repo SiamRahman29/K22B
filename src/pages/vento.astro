@@ -13,6 +13,18 @@ const favicon =
 // missing keeps its styled placeholder.
 const heroMedia = { src: '/vento/hero.mp4', poster: '/vento/hero-poster.jpg' };
 
+// What Vento is, stated in the hero. Drawn from the app itself, not from the
+// recordings: five roles (viewer, factory, operator, manager, admin), products
+// that manufacture over a phased timeline, and a fully bilingual interface.
+const highlights = [
+  'Units, weight, or both',
+  'Recipe-driven batches',
+  'Timed production runs',
+  'Branded invoices & receipts',
+  'Five access roles',
+  'English & বাংলা',
+];
+
 // The hero recording is one unbroken run through the app. Each chapter below
 // seeks the hero video to `at` (seconds), so the copy and the footage stay in
 // step. `icon` holds lucide-style SVG path markup.
@@ -109,7 +121,7 @@ const sections = [
       {
         title: 'Proof of purchase',
         body:
-          "Attach the supplier's own invoice as an image. Vento holds it for fifteen days and shows the exact date and time it expires.",
+          "Every supply carries the supplier's own invoice as an image; it is not optional. Vento holds it for fifteen days and shows the exact date and time it expires.",
       },
     ],
   },
@@ -196,14 +208,19 @@ const sections = [
               <span class="v-line v-grad" data-reveal style="--d:2">under one roof.</span>
             </h1>
             <p class="v-hero-sub" data-reveal style="--d:3">
-              One unbroken run through Vento: raw materials in by unit or weight,
-              recipes turned into production batches, and the finished goods sold
-              on with a branded invoice at the end.
+              The system a small manufacturer runs the floor on: stock counted by
+              unit or by weight, recipes that turn raw material into finished
+              batches, and goods that leave as branded invoices and delivery
+              receipts.
             </p>
-            <div class="v-hero-actions" data-reveal style="--d:4">
-              <a class="v-btn v-btn-primary v-btn-lg" href="#walkthrough">What the run covers</a>
-              <a class="v-btn v-btn-secondary v-btn-lg" href="#orders">Orders, supply &amp; admin</a>
-            </div>
+            <ul class="v-hero-points" data-reveal style="--d:4">
+              {highlights.map((h) => (
+                <li class="v-hero-point">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+                  {h}
+                </li>
+              ))}
+            </ul>
 
             <div class="v-hero-media" data-reveal style="--d:5" data-hero-media>
               <MediaSlot
@@ -250,11 +267,11 @@ const sections = [
         <section class="v-section" id="walkthrough">
           <div class="v-wrap">
             <div class="v-section-head" data-reveal>
-              <span class="v-eyebrow">The walkthrough</span>
-              <h2 class="v-h2">One run, raw material to sale</h2>
+              <span class="v-eyebrow">The loop</span>
+              <h2 class="v-h2">Raw material to sale, in four moves</h2>
               <p class="v-lead">
-                The recording at the top is a single sitting with nothing cut out.
-                Pick a chapter and it plays from there.
+                Everything a build passes through, in the order it happens. Pick one
+                to watch that part of it.
               </p>
             </div>
 
@@ -409,8 +426,6 @@ const sections = [
       .v-btn-lg { padding: 12px 22px; font-size: 15px; }
       .v-btn-primary { background: var(--color-brand-500); color: #fff; box-shadow: 0 6px 18px -8px rgb(193 19 24 / 0.6); }
       .v-btn-primary:hover { background: var(--color-brand-700); transform: translateY(-1px); box-shadow: 0 10px 24px -8px rgb(193 19 24 / 0.55); }
-      .v-btn-secondary { background: var(--color-surface); color: var(--color-ink-soft); border-color: var(--color-line); }
-      .v-btn-secondary:hover { background: var(--color-line-soft); transform: translateY(-1px); }
       .v-btn-ghost { background: transparent; color: var(--color-mute); }
       .v-btn-ghost:hover { color: var(--color-ink); background: var(--color-line-soft); }
       .v-btn-invert { background: #fff; color: var(--color-brand-700); }
@@ -444,7 +459,9 @@ const sections = [
       .v-hero-title { margin-top: 20px; font-size: clamp(38px, 6.4vw, 68px); font-weight: 700; line-height: 1.03; letter-spacing: -0.03em; max-width: 16ch; }
       .v-line { display: block; }
       .v-hero-sub { margin-top: 22px; font-size: clamp(16px, 1.6vw, 20px); color: var(--color-mute); max-width: 56ch; }
-      .v-hero-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+      .v-hero-points { margin: 30px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 720px; }
+      .v-hero-point { display: inline-flex; align-items: center; gap: 8px; padding: 8px 15px; border: 1px solid var(--color-line); border-radius: 999px; background: var(--color-surface); box-shadow: var(--shadow-card); font-size: 13.5px; font-weight: 500; color: var(--color-ink-soft); }
+      .v-hero-point svg { flex: none; color: var(--color-brand-500); }
       .v-hero-media { margin-top: clamp(40px, 6vw, 72px); width: 100%; max-width: 960px; }
       .v-hero-media .media--chrome { box-shadow: var(--shadow-xl); }
       .v-scrollcue { position: relative; z-index: 1; margin: clamp(28px, 4vw, 44px) auto 0; display: inline-flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-mute); width: 100%; }
