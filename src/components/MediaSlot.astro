@@ -188,6 +188,11 @@ const kindLabel = kind === 'video' ? 'Demo video' : kind === 'gif' ? 'GIF' : 'Ph
         else el.addEventListener('load', reveal, { once: true });
         el.addEventListener('error', () => { el.style.display = 'none'; }, { once: true });
       } else if (el instanceof HTMLVideoElement) {
+        // With preload="metadata" some browsers never reach `loadeddata` until
+        // playback starts, so metadata (which is enough to paint the poster) is
+        // treated as ready too.
+        if (el.readyState >= 1) reveal();
+        el.addEventListener('loadedmetadata', reveal, { once: true });
         el.addEventListener('loadeddata', reveal, { once: true });
         el.addEventListener('error', () => { el.style.display = 'none'; }, { once: true });
       }

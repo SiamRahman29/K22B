@@ -1,70 +1,59 @@
 # Vento showcase media
 
-Drop files here with the **exact names** below and they replace the placeholders
-on the `/vento` page automatically, no code changes needed. Any missing file just keeps
-its styled placeholder, so you can add media incrementally.
-
-## Format guide
-
-- **Looping clips** (`*.mp4`): short, **silent**, **seamless loops**. They autoplay
-  muted with no controls: treat them like a moving screenshot, ~6–12s.
-  Export H.264 MP4, ~1280×800 (16:10) or 1600×900. Keep each under ~3–4 MB.
-- **The demo** (`demo.mp4`): a real video **with** playback controls. This one can
-  have length and detail. See the shot list below.
-- **Screenshots** (`*.png`): crisp, high-DPI stills. Use a clean, realistic dataset.
-  Hide anything you don't want public.
-- **Posters** (`*-poster.png`): first-frame still shown before a video loads.
-
-Record at a consistent window size and zoom so everything lines up. Retina/2× looks best.
+The `/vento` page is built around four screen recordings. Drop files here with the
+**exact names** below and they replace the placeholders automatically, no code
+changes needed. Any missing file just keeps its styled placeholder, so you can add
+media incrementally.
 
 ## Files the page expects
 
-| File                 | Type            | Where            | Aspect |
-| -------------------- | --------------- | ---------------- | ------ |
-| `hero.mp4`           | looping clip    | Hero             | 16:10  |
-| `hero-poster.png`    | poster still    | Hero             | 16:10  |
-| `inventory.mp4`      | looping clip    | Feature 01       | 16:10  |
-| `manufacture.mp4`    | looping clip    | Feature 02       | 16:10  |
-| `invoice.png`        | screenshot      | Feature 03       | 16:10  |
-| `customers.mp4`      | looping clip    | Feature 04       | 16:10  |
-| `roles.png`          | screenshot      | Feature 05       | 16:10  |
-| `history.mp4`        | looping clip    | Feature 06       | 16:10  |
-| `demo.mp4`           | video (controls)| Demo section     | 16:9   |
-| `demo-poster.png`    | poster still    | Demo section     | 16:9   |
-| `gallery-1.png`      | screenshot      | Gallery          | 4:3    |
-| `gallery-2.mp4`      | looping clip    | Gallery          | 4:3    |
-| `gallery-3.png`      | screenshot      | Gallery          | 4:3    |
-| `gallery-4.png`      | screenshot      | Gallery          | 4:3    |
-| `gallery-5.mp4`      | looping clip    | Gallery          | 4:3    |
-| `gallery-6.png`      | screenshot      | Gallery          | 4:3    |
+| File                  | What it shows                                      | Where          |
+| --------------------- | -------------------------------------------------- | -------------- |
+| `hero.mp4`            | Raw material to sale, the full run                  | Hero           |
+| `hero-poster.jpg`     | First-frame still for the hero                      | Hero           |
+| `orders.mp4`          | Orders, sales, invoices, delivery receipts          | Orders section |
+| `orders-poster.jpg`   | Poster still                                        | Orders section |
+| `supply.mp4`          | Suppliers, supplies, proof of purchase              | Supply section |
+| `supply-poster.jpg`   | Poster still                                        | Supply section |
+| `admin.mp4`           | Wastage convention, letterheads, invites, বাংলা      | Admin section  |
+| `admin-poster.jpg`    | Poster still                                        | Admin section  |
 
-## Shot list (what to capture)
+All four play with controls, so they can run long. Record at a consistent window
+size and zoom; the page renders them at the source aspect ratio (1287 × 795).
 
-- **hero.mp4**: a slow, calm pass over the dashboard: a gentle scroll or a couple
-  of hovers. Ambient, not a task. This sets the tone; keep it smooth.
-- **inventory.mp4**: the raw-materials (or products) list: filter/search, then open
-  one item so its unit **and** weight are visible.
-- **manufacture.mp4**: the hero flow: pick a product, enter a batch quantity, run it,
-  and let stock visibly deduct. This is the money shot.
-- **invoice.png**: a generated PDF invoice rendered on your letterhead (the branded
-  document, not the form).
-- **customers.mp4**: open a customer and scroll their sales history.
-- **roles.png**: the admin panel showing users with different role badges (or the
-  role dropdown open).
-- **history.mp4**: an item's activity timeline / a manufacture run's detail, scrolled.
-- **demo.mp4**: the full loop, ~60–90s: stock intake → build/confirm a recipe → run a
-  manufacture batch → record a sale → download the branded invoice. Silent is fine;
-  on-screen captions help. This is the one with controls, so it can breathe.
-- **gallery-1** products & recipes · **gallery-2** adjusting stock (clip) ·
-  **gallery-3** sales & delivery receipts · **gallery-4** categories ·
-  **gallery-5** language switch (clip) · **gallery-6** admin & settings.
+## What each recording covers
 
-Tips: seed realistic names/quantities before recording; a wrong record on screen is
-forever. To convert a screen recording to a lean loop:
-`ffmpeg -i in.mov -vf "fps=30,scale=1600:-2" -an -movflags +faststart -crf 26 out.mp4`
+- **hero.mp4** — one unbroken sitting: the dashboard, registering raw materials by
+  unit and by weight, registering a product with its recipe and defect rate, running
+  a manufacture batch, registering a customer, and recording a priced sale.
+  The chapter cards on the page seek this file, so **if you re-record it, update the
+  `at` seconds in the `chapters` array** in `src/pages/vento.astro`.
+- **orders.mp4** — recording an order against a customer with a due date, watching
+  the in-stock / short-on-stock flag, fulfilling it as a sale, then downloading the
+  PDF invoice and preparing a delivery receipt.
+- **supply.mp4** — an item's activity history, the supplier book, recording a supply
+  that raises stock, and attaching a proof-of-purchase image.
+- **admin.mp4** — the wastage convention, document letterheads, one-time invite
+  codes, user roles, category lists, and the English / Bangla switch.
+
+## Converting a screen recording
+
+```
+ffmpeg -i "Raw material to sales.mov" \
+  -vf "scale=1280:-2" -c:v libx264 -crf 27 -preset slow -pix_fmt yuv420p \
+  -an -movflags +faststart public/vento/hero.mp4
+
+ffmpeg -ss 1 -i public/vento/hero.mp4 -frames:v 1 -q:v 4 public/vento/hero-poster.jpg
+```
+
+Screen content compresses well, so a five-minute run lands in a few megabytes. Keep
+the whole folder comfortably small: these files ship in the Pages build.
+
+Seed realistic names and quantities before recording, and hide anything you do not
+want public. A wrong record on screen is forever.
 
 ## Changing a slot
 
-Edit `src/pages/vento.astro` (the `features` array and the `<MediaSlot>` tags) to
-change a slot's file, type (`kind` / `loop`), label, or aspect. The slot component is
-`src/components/MediaSlot.astro`.
+Edit `src/pages/vento.astro`: `heroMedia` for the hero, the `sections` array for the
+other three (file, poster, caption, copy), and `chapters` for the hero's chapter
+cards. The slot component itself is `src/components/MediaSlot.astro`.

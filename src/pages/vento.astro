@@ -4,67 +4,142 @@ import MediaSlot from '../components/MediaSlot.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const title = 'Vento: Inventory & Manufacturing, Under One Roof';
 const description =
-  'Vento is an inventory and manufacturing system: track stock by unit or weight, run recipe-driven production batches, and issue branded invoices. A K22B build.';
+  'Vento is an inventory and manufacturing system: track stock by unit or weight, run recipe-driven production batches, and issue branded invoices and delivery receipts. A K22B build.';
 const favicon =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c11318'/%3E%3Ctext x='16' y='23' font-family='Inter,Arial,sans-serif' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E";
 
-// Feature steps drive the pinned scrollytelling panel. Drop matching files into
-// public/vento/ (see public/vento/README.md) and they replace placeholders
-// automatically. `icon` holds lucide-style SVG path markup.
-const features = [
+// Every clip on this page is a real screen recording. Drop the four files named
+// in public/vento/README.md into public/vento/ and they go live; anything
+// missing keeps its styled placeholder.
+const heroMedia = { src: '/vento/hero.mp4', poster: '/vento/hero-poster.jpg' };
+
+// The hero recording is one unbroken run through the app. Each chapter below
+// seeks the hero video to `at` (seconds), so the copy and the footage stay in
+// step. `icon` holds lucide-style SVG path markup.
+const chapters = [
   {
-    kicker: 'Inventory',
+    at: 8,
+    stamp: '00:08',
+    kicker: 'Raw materials',
     title: 'Stock, two ways at once',
     body:
-      "Track raw materials and finished products by units, by weight, or by both at once. For dual-scale items, weight is the single source of truth, so unit counts are derived from it and never drift.",
-    url: 'vento.app/raw-materials',
+      'Register an input by units, by weight, or by both at once. Give it a starting count and a starting weight and Vento derives the weight per unit for you, then carries a set price and a buying price on each scale.',
     icon: '<path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>',
-    media: { kind: 'video', loop: true, src: '/vento/inventory.mp4', label: 'Raw materials & products, by unit or weight', aspect: '16/10' },
   },
   {
-    kicker: 'Recipes → Manufacturing',
-    title: 'Recipes in, batches out',
+    at: 80,
+    stamp: '01:20',
+    kicker: 'Products & recipes',
+    title: 'A product is its recipe',
     body:
-      "Define what each product is made of, then run a production batch. In one action, Vento scales the recipe to the batch, deducts every raw material from stock, and accounts for input wastage and output defects.",
-    url: 'vento.app/manufacture',
+      'Registering a product takes two steps: the details, then what it is built from. Every ingredient carries its own input wastage, every build carries its utility costs, and a defects percentage says how much of the output comes back unusable.',
+    icon: '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/>',
+  },
+  {
+    at: 155,
+    stamp: '02:35',
+    kicker: 'Manufacture',
+    title: 'Batches out, stock down',
+    body:
+      'Pick a product, enter a batch size, run it. Vento consumes every ingredient at recipe scale, splits the result into good and defect output, and files the run with who did it and exactly what it ate.',
     icon: '<path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>',
-    media: { kind: 'video', loop: true, src: '/vento/manufacture.mp4', label: 'Running a manufacture batch', aspect: '16/10' },
   },
   {
-    kicker: 'Sales & Invoicing',
-    title: 'Branded invoices, on tap',
+    at: 193,
+    stamp: '03:13',
+    kicker: 'Customers & sales',
+    title: 'Ring it up, priced your way',
     body:
-      "Record a sale and Vento prices it from your set prices (or a one-off override), then generates a PDF invoice or delivery receipt. Upload your letterhead once and every document renders onto it.",
-    url: 'vento.app/sales',
+      'Keep a customer book, then sell finished products, raw materials, or defect residuals from one form. Prices default to the ones you set, accept a one-off override or a discount, and charges like transport ride along on the total.',
     icon: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>',
-    media: { kind: 'photo', loop: false, src: '/vento/invoice.png', label: 'PDF invoice on a custom letterhead', aspect: '16/10' },
+  },
+];
+
+// The remaining three recordings, each with its own section.
+const sections = [
+  {
+    id: 'orders',
+    dark: true,
+    eyebrow: 'Orders',
+    title: 'Orders in, documents out',
+    lead:
+      'Record what a customer has asked for, see at a glance whether you can cover it, then turn the fulfilled order into an invoice and a delivery receipt.',
+    url: 'vento.app/orders',
+    media: { src: '/vento/orders.mp4', poster: '/vento/orders-poster.jpg' },
+    label: 'Recording an order, fulfilling it, and printing the paperwork',
+    specs: [
+      {
+        title: 'An order moves no stock',
+        body:
+          'An order is a promise, not a shipment. It carries a customer, a received date, a due date, and the items asked for. Nothing leaves inventory until the sale happens.',
+      },
+      {
+        title: 'In stock, or short',
+        body:
+          'Every open order says whether current stock covers it, so a shortfall surfaces while there is still time to manufacture against it.',
+      },
+      {
+        title: 'Invoice and receipt',
+        body:
+          'Fulfil an order from the sales form and it closes as completed. Download the invoice as a PDF, then prepare a delivery receipt with deliveryman and recipient details, fixed once prepared so every printed copy matches.',
+      },
+    ],
   },
   {
-    kicker: 'Customers',
-    title: 'A customer book that remembers',
-    body:
-      "Keep contacts with phone, email, and address, or ring up a quick walk-in sale. Every sale snapshots the customer as it happens, so history stays intact even after a record is edited or removed.",
-    url: 'vento.app/customers',
-    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    media: { kind: 'video', loop: true, src: '/vento/customers.mp4', label: 'Customer records & sales history', aspect: '16/10' },
+    id: 'supply',
+    dark: false,
+    eyebrow: 'Supply',
+    title: 'Where the stock came from',
+    lead:
+      'Suppliers, purchases, and the paperwork that proves them, plus the running account of every move a material has ever made.',
+    url: 'vento.app/supplies',
+    media: { src: '/vento/supply.mp4', poster: '/vento/supply-poster.jpg' },
+    label: 'Suppliers, recording a supply, and proof of purchase',
+    specs: [
+      {
+        title: 'Suppliers on file',
+        body:
+          'The businesses you buy from, kept with phone, email, and address. The mirror image of the customer book on the selling side.',
+      },
+      {
+        title: 'Supplies raise stock',
+        body:
+          'Each line of a supply brings one raw material in at its buying price, with utility charges on top, and stock goes up the moment it is recorded.',
+      },
+      {
+        title: 'Proof of purchase',
+        body:
+          "Attach the supplier's own invoice as an image. Vento holds it for fifteen days and shows the exact date and time it expires.",
+      },
+    ],
   },
   {
-    kicker: 'Roles & Access',
-    title: 'The right eyes on the right numbers',
-    body:
-      "Five roles, from delivery driver to admin. Viewers read, operators and managers write and manufacture, admins manage users, and delivery drivers see the goods without ever seeing the pricing.",
+    id: 'admin',
+    dark: true,
+    eyebrow: 'Admin',
+    title: 'The settings that change the arithmetic',
+    lead:
+      'Admin is not only users and access. It decides how wastage is counted, what your documents look like, and which language the floor works in.',
     url: 'vento.app/admin',
-    icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
-    media: { kind: 'photo', loop: false, src: '/vento/roles.png', label: 'Role-aware admin panel', aspect: '16/10' },
-  },
-  {
-    kicker: 'Audit Trail',
-    title: 'Every move, on the record',
-    body:
-      "Manufacture runs and stock adjustments are logged with name snapshots, quantities, and remarks. The paper trail survives edits and deletions, so you can always answer what happened to this stock, and when.",
-    url: 'vento.app/history',
-    icon: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',
-    media: { kind: 'video', loop: true, src: '/vento/history.mp4', label: 'Item activity & manufacture history', aspect: '16/10' },
+    media: { src: '/vento/admin.mp4', poster: '/vento/admin-poster.jpg' },
+    label: 'Wastage convention, letterheads, invites, and the Bangla switch',
+    specs: [
+      {
+        title: 'Wastage convention',
+        body:
+          'Decide once whether a recipe wastage rate is added on top of the recipe or already inside it. Vento shows the worked example in kilograms and then applies it to every product.',
+      },
+      {
+        title: 'Letterheads',
+        body:
+          'Upload up to ten named PDFs and your invoices and delivery receipts print onto them. Until you add one, documents carry the built-in Vento header.',
+      },
+      {
+        title: 'Invites, roles, and বাংলা',
+        body:
+          'Generate a one-time signup code that expires, set or revoke a user’s role, keep your category lists, and switch the whole interface between English and Bangla.',
+      },
+    ],
   },
 ];
 ---
@@ -97,9 +172,10 @@ const features = [
             <span class="v-brand-word">Vento</span>
           </a>
           <nav class="v-nav-links" aria-label="Primary">
-            <a href="#features">Features</a>
-            <a href="#demo">Demo</a>
-            <a href="#gallery">Gallery</a>
+            <a href="#walkthrough">Walkthrough</a>
+            <a href="#orders">Orders</a>
+            <a href="#supply">Supply</a>
+            <a href="#admin">Admin</a>
           </nav>
           <div class="v-nav-cta">
             <a class="v-btn v-btn-ghost v-hide-sm" href={`${base}/`}>Built by K22B</a>
@@ -120,17 +196,24 @@ const features = [
               <span class="v-line v-grad" data-reveal style="--d:2">under one roof.</span>
             </h1>
             <p class="v-hero-sub" data-reveal style="--d:3">
-              Vento runs the whole loop for a small manufacturer: track stock by
-              unit or weight, turn recipes into production batches, and issue
-              branded invoices, from raw material to sale.
+              One unbroken run through Vento: raw materials in by unit or weight,
+              recipes turned into production batches, and the finished goods sold
+              on with a branded invoice at the end.
             </p>
             <div class="v-hero-actions" data-reveal style="--d:4">
-              <a class="v-btn v-btn-primary v-btn-lg" href="#demo">See the demo</a>
-              <a class="v-btn v-btn-secondary v-btn-lg" href="#features">Explore features</a>
+              <a class="v-btn v-btn-primary v-btn-lg" href="#walkthrough">What the run covers</a>
+              <a class="v-btn v-btn-secondary v-btn-lg" href="#orders">Orders, supply &amp; admin</a>
             </div>
 
-            <div class="v-hero-media" data-reveal style="--d:5">
-              <MediaSlot kind="video" src="/vento/hero.mp4" poster="/vento/hero-poster.png" url="vento.app/dashboard" loop chrome aspect="16/10" />
+            <div class="v-hero-media" data-reveal style="--d:5" data-hero-media>
+              <MediaSlot
+                kind="video"
+                src={heroMedia.src}
+                poster={heroMedia.poster}
+                url="vento.app · raw material to sale"
+                chrome
+                aspect="1286/794"
+              />
             </div>
           </div>
 
@@ -143,10 +226,10 @@ const features = [
         <!-- Stat strip -->
         <section class="v-stats-band" id="stats">
           <div class="v-wrap v-stats">
-            <div class="v-stat" data-reveal style="--d:0"><div class="v-stat-num">2</div><div class="v-stat-label">Stock scales: units &amp; weight, together</div></div>
-            <div class="v-stat" data-reveal style="--d:1"><div class="v-stat-num">5</div><div class="v-stat-label">Access roles, from delivery to admin</div></div>
-            <div class="v-stat" data-reveal style="--d:2"><div class="v-stat-num">1</div><div class="v-stat-label">Loop, raw material to invoice</div></div>
-            <div class="v-stat" data-reveal style="--d:3"><div class="v-stat-num">∞</div><div class="v-stat-label">Audit history, snapshot-safe</div></div>
+            <div class="v-stat" data-reveal style="--d:0"><div class="v-stat-num">12</div><div class="v-stat-label">Sections, dashboard through admin</div></div>
+            <div class="v-stat" data-reveal style="--d:1"><div class="v-stat-num">2</div><div class="v-stat-label">Stock scales: units, weight, or both</div></div>
+            <div class="v-stat" data-reveal style="--d:2"><div class="v-stat-num">10</div><div class="v-stat-label">Letterheads your documents can print onto</div></div>
+            <div class="v-stat" data-reveal style="--d:3"><div class="v-stat-num">2</div><div class="v-stat-label">Languages: English and বাংলা</div></div>
           </div>
         </section>
 
@@ -163,87 +246,75 @@ const features = [
           </div>
         </section>
 
-        <!-- Features: pinned scrollytelling -->
-        <section class="v-story" id="features">
+        <!-- Walkthrough chapters: each card seeks the hero recording -->
+        <section class="v-section" id="walkthrough">
           <div class="v-wrap">
             <div class="v-section-head" data-reveal>
-              <span class="v-eyebrow">Features</span>
-              <h2 class="v-h2">Everything from raw material to sale</h2>
-              <p class="v-lead">Six capabilities, one flow. Scroll to walk through each.</p>
+              <span class="v-eyebrow">The walkthrough</span>
+              <h2 class="v-h2">One run, raw material to sale</h2>
+              <p class="v-lead">
+                The recording at the top is a single sitting with nothing cut out.
+                Pick a chapter and it plays from there.
+              </p>
             </div>
 
-            <div class="v-story-grid">
-              <!-- Sticky product frame (desktop) -->
-              <div class="v-story-media" aria-hidden="true">
-                <div class="v-frame">
-                  <div class="v-frame-bar">
-                    <span class="media-dots"><i></i><i></i><i></i></span>
-                    <span class="v-frame-url" data-frame-url>vento.app</span>
-                  </div>
-                  <div class="v-frame-body">
-                    {features.map((f, i) => (
-                      <div class:list={["v-layer", { "is-active": i === 0 }]} data-layer>
-                        <MediaSlot kind={f.media.kind as 'video' | 'gif' | 'photo'} src={f.media.src} loop={f.media.loop} aspect="16/10" bare />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            <div class="v-chapters">
+              {chapters.map((c, i) => (
+                <button class="v-chapter-card" type="button" data-seek={c.at} data-reveal style={`--d:${i}`}>
+                  <span class="v-chapter-top">
+                    <span class="v-feature-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={c.icon} />
+                    </span>
+                    <span class="v-time">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                      {c.stamp}
+                    </span>
+                  </span>
+                  <span class="v-kicker">{c.kicker}</span>
+                  <span class="v-feature-title">{c.title}</span>
+                  <span class="v-feature-body">{c.body}</span>
+                </button>
+              ))}
+            </div>
+            <p class="v-chapters-note" data-reveal>Chapters jump the recording above to that moment.</p>
+          </div>
+        </section>
+
+        <!-- The other three recordings -->
+        {sections.map((s) => (
+          <section class:list={["v-chapter-section", { "v-dark": s.dark }]} id={s.id}>
+            {s.dark && <div class="v-chapter-glow" aria-hidden="true"></div>}
+            <div class="v-wrap">
+              <div class="v-section-head" data-reveal>
+                <span class:list={["v-eyebrow", { "v-eyebrow-light": s.dark }]}>{s.eyebrow}</span>
+                <h2 class:list={["v-h2", { "v-h2-light": s.dark }]}>{s.title}</h2>
+                <p class:list={["v-lead", { "v-lead-light": s.dark }]}>{s.lead}</p>
               </div>
 
-              <!-- Steps -->
-              <div class="v-story-steps">
-                {features.map((f, i) => (
-                  <article class:list={["v-step", { "is-active": i === 0 }]} data-step={i} data-url={f.url}>
-                    <span class="v-feature-icon">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={f.icon} />
-                    </span>
-                    <span class="v-kicker">{f.kicker}</span>
-                    <h3 class="v-feature-title">{f.title}</h3>
-                    <p class="v-feature-body">{f.body}</p>
-                    <!-- Inline media (mobile only) -->
-                    <div class="v-step-media">
-                      <MediaSlot kind={f.media.kind as 'video' | 'gif' | 'photo'} src={f.media.src} loop={f.media.loop} label={f.media.label} url={f.url} chrome aspect="16/10" />
-                    </div>
-                  </article>
+              <div class="v-specs">
+                {s.specs.map((sp, i) => (
+                  <div class="v-spec" data-reveal style={`--d:${i}`}>
+                    <span class="v-spec-num">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 class="v-spec-title">{sp.title}</h3>
+                    <p class="v-spec-body">{sp.body}</p>
+                  </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
 
-        <!-- Demo: dark cinematic -->
-        <section class="v-demo v-dark" id="demo">
-          <div class="v-demo-glow" aria-hidden="true"></div>
-          <div class="v-wrap">
-            <div class="v-section-head v-section-head--center" data-reveal>
-              <span class="v-eyebrow v-eyebrow-light">See it move</span>
-              <h2 class="v-h2 v-h2-light">The full walkthrough</h2>
-              <p class="v-lead v-lead-light">A guided run from stock intake to a finished invoice.</p>
+              <div class="v-chapter-media" data-reveal>
+                <MediaSlot
+                  kind="video"
+                  src={s.media.src}
+                  poster={s.media.poster}
+                  label={s.label}
+                  url={s.url}
+                  chrome
+                  aspect="1286/794"
+                />
+              </div>
             </div>
-            <div class="v-demo-media" data-reveal>
-              <MediaSlot kind="video" src="/vento/demo.mp4" poster="/vento/demo-poster.png" url="vento.app · demo" chrome aspect="16/9" />
-            </div>
-          </div>
-        </section>
-
-        <!-- Gallery -->
-        <section class="v-section" id="gallery">
-          <div class="v-wrap">
-            <div class="v-section-head" data-reveal>
-              <span class="v-eyebrow">Gallery</span>
-              <h2 class="v-h2">In the wild</h2>
-              <p class="v-lead">Screens and clips from across the app. Drop in whatever shows it best.</p>
-            </div>
-            <div class="v-gallery">
-              <div class="v-gitem" data-reveal style="--d:0"><MediaSlot kind="photo" src="/vento/gallery-1.png" label="Products & recipes" aspect="4/3" /></div>
-              <div class="v-gitem" data-reveal style="--d:1"><MediaSlot kind="video" loop src="/vento/gallery-2.mp4" label="Adjusting stock" aspect="4/3" /></div>
-              <div class="v-gitem" data-reveal style="--d:2"><MediaSlot kind="photo" src="/vento/gallery-3.png" label="Sales & delivery receipts" aspect="4/3" /></div>
-              <div class="v-gitem" data-reveal style="--d:0"><MediaSlot kind="photo" src="/vento/gallery-4.png" label="Categories" aspect="4/3" /></div>
-              <div class="v-gitem" data-reveal style="--d:1"><MediaSlot kind="video" loop src="/vento/gallery-5.mp4" label="Language switch" aspect="4/3" /></div>
-              <div class="v-gitem" data-reveal style="--d:2"><MediaSlot kind="photo" src="/vento/gallery-6.png" label="Admin & settings" aspect="4/3" /></div>
-            </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
         <!-- CTA band -->
         <section class="v-cta">
@@ -298,7 +369,11 @@ const features = [
         -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
       }
-      .vento-page a { color: inherit; text-decoration: none; }
+      /* Buttons are excluded: a bare `.vento-page a` selector outranks the
+         single-class .v-btn-* colours, which would leave them inheriting the
+         surrounding text colour (white on white in the CTA band). */
+      .vento-page a { text-decoration: none; }
+      .vento-page a:not(.v-btn) { color: inherit; }
       .vento-page img { display: block; max-width: 100%; height: auto; }
       .vento-page ::selection { background: var(--color-brand-100); color: var(--color-ink); }
       .vento-page :focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; border-radius: 2px; }
@@ -371,7 +446,7 @@ const features = [
       .v-hero-sub { margin-top: 22px; font-size: clamp(16px, 1.6vw, 20px); color: var(--color-mute); max-width: 56ch; }
       .v-hero-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
       .v-hero-media { margin-top: clamp(40px, 6vw, 72px); width: 100%; max-width: 960px; }
-      .v-hero-media :global(.media--chrome) { box-shadow: var(--shadow-xl); }
+      .v-hero-media .media--chrome { box-shadow: var(--shadow-xl); }
       .v-scrollcue { position: relative; z-index: 1; margin: clamp(28px, 4vw, 44px) auto 0; display: inline-flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-mute); width: 100%; }
       .v-scrollcue svg { animation: v-bounce 1.8s var(--ease-out-quart) infinite; }
       @keyframes v-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
@@ -394,59 +469,58 @@ const features = [
       .v-statement-text { margin-top: 24px; font-size: clamp(30px, 5.4vw, 62px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
       .v-statement-text span { display: block; }
 
-      /* ---------- story / scrollytelling ---------- */
-      .v-story { padding: clamp(64px, 10vw, 120px) 0; }
-      .v-section-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 56px); }
-      .v-section-head--center { margin-left: auto; margin-right: auto; text-align: center; }
-      .v-section-head--center .v-lead { margin-left: auto; margin-right: auto; }
-
-      .v-story-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
-      @media (min-width: 900px) { .v-story-grid { grid-template-columns: 1.05fr 0.95fr; gap: clamp(40px, 5vw, 80px); align-items: start; } }
-
-      .v-story-media { display: none; }
-      @media (min-width: 900px) { .v-story-media { display: block; position: sticky; top: 96px; } }
-      .v-frame { border: 1px solid var(--color-line); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-xl); overflow: hidden; }
-      .v-frame-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--color-paper-soft); border-bottom: 1px solid var(--color-line); }
-      .media-dots { display: inline-flex; gap: 6px; }
-      .media-dots i { width: 11px; height: 11px; border-radius: 999px; display: block; }
-      .media-dots i:nth-child(1) { background: #ff5f57; } .media-dots i:nth-child(2) { background: #febc2e; } .media-dots i:nth-child(3) { background: #28c840; }
-      .v-frame-url { flex: 1; text-align: center; font-family: var(--font-mono); font-size: 12px; color: var(--color-mute); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 999px; padding: 5px 14px; max-width: 300px; margin: 0 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.3s; }
-      .v-frame-body { position: relative; aspect-ratio: 16 / 10; }
-      .v-layer { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity 0.6s var(--ease-out-quart), transform 0.6s var(--ease-out-quart); pointer-events: none; }
-      .v-layer.is-active { opacity: 1; transform: none; }
-
-      .v-story-steps { display: flex; flex-direction: column; gap: clamp(48px, 9vw, 108px); }
-      @media (min-width: 900px) { .v-story-steps { gap: 0; } .v-step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; padding: 24px 0; } }
-      .v-feature-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-brand-50); color: var(--color-brand-500); margin-bottom: 16px; transition: transform 0.4s var(--ease-out-quart); }
-      .v-kicker { display: block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-brand-600); }
-      .v-feature-title { margin-top: 10px; font-size: clamp(24px, 3vw, 34px); font-weight: 600; line-height: 1.12; }
-      .v-feature-body { margin-top: 14px; font-size: clamp(15px, 1.3vw, 17px); color: var(--color-mute); max-width: 48ch; }
-      /* On desktop, non-active steps dim to focus the reader */
-      @media (min-width: 900px) {
-        .v-step { opacity: 0.42; transition: opacity 0.4s var(--ease-out-quart); }
-        .v-step.is-active { opacity: 1; }
-        .v-step.is-active .v-feature-icon { transform: scale(1.06); }
-        .v-step-media { display: none; }
-      }
-      .v-step-media { margin-top: 22px; }
-
-      /* ---------- demo ---------- */
-      .v-demo { padding: clamp(64px, 10vw, 128px) 0; }
-      .v-demo-glow { position: absolute; top: 30%; left: 50%; width: min(900px, 110vw); height: 500px; transform: translateX(-50%); background: radial-gradient(50% 50% at 50% 50%, rgb(193 19 24 / 0.28), transparent 70%); filter: blur(20px); pointer-events: none; }
-      .v-demo .v-wrap { position: relative; }
-      .v-demo-media { max-width: 940px; margin: clamp(36px, 5vw, 56px) auto 0; transform: translateY(26px) scale(0.96); opacity: 0; transition: opacity 0.9s var(--ease-out-quart), transform 0.9s var(--ease-out-quart); }
-      .v-demo-media.is-visible { opacity: 1; transform: none; }
-      .v-demo-media :global(.media--chrome) { box-shadow: var(--shadow-xl); border-color: rgb(255 255 255 / 0.1); }
-      .v-demo-media :global(.media-bar) { background: #12181f; }
-      .v-demo-media :global(.media-url) { background: #1b2531; border-color: rgb(255 255 255 / 0.08); color: var(--color-mute-soft); }
-
-      /* ---------- gallery ---------- */
+      /* ---------- section scaffolding ---------- */
       .v-section { padding: clamp(64px, 10vw, 120px) 0; }
-      .v-gallery { display: grid; grid-template-columns: 1fr; gap: clamp(18px, 2.5vw, 28px); }
-      @media (min-width: 620px) { .v-gallery { grid-template-columns: repeat(2, 1fr); } }
-      @media (min-width: 940px) { .v-gallery { grid-template-columns: repeat(3, 1fr); } }
-      .v-gitem :global(.media-frame) { transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart); }
-      .v-gitem:hover :global(.media-frame) { transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+      .v-section-head { max-width: 640px; margin-bottom: clamp(36px, 5vw, 56px); }
+
+      /* ---------- walkthrough chapter cards ---------- */
+      .v-chapters { display: grid; grid-template-columns: 1fr; gap: clamp(16px, 2vw, 24px); }
+      @media (min-width: 720px) { .v-chapters { grid-template-columns: repeat(2, 1fr); } }
+      .v-chapter-card {
+        display: flex; flex-direction: column; align-items: flex-start;
+        text-align: left; width: 100%; margin: 0;
+        font: inherit; color: inherit; cursor: pointer;
+        background: var(--color-surface);
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-lg);
+        padding: clamp(22px, 2.6vw, 30px);
+        box-shadow: var(--shadow-card);
+        transition: transform 0.35s var(--ease-out-quart), box-shadow 0.35s var(--ease-out-quart), border-color 0.35s;
+      }
+      .v-chapter-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); border-color: var(--color-brand-100); }
+      .v-chapter-card:hover .v-time { background: var(--color-brand-500); color: #fff; }
+      .v-chapter-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
+      .v-feature-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-brand-50); color: var(--color-brand-500); transition: transform 0.4s var(--ease-out-quart); }
+      .v-chapter-card:hover .v-feature-icon { transform: scale(1.06); }
+      .v-time { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; padding: 5px 11px; border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-600); transition: background-color 0.25s, color 0.25s; }
+      .v-kicker { display: block; margin-top: 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-brand-600); }
+      .v-feature-title { display: block; margin-top: 10px; font-size: clamp(21px, 2.2vw, 26px); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+      .v-feature-body { display: block; margin-top: 12px; font-size: clamp(14.5px, 1.2vw, 16px); color: var(--color-mute); }
+      .v-chapters-note { margin-top: 22px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-mute-soft); }
+
+      /* ---------- recording sections (orders / supply / admin) ---------- */
+      .v-chapter-section { padding: clamp(64px, 10vw, 120px) 0; }
+      .v-chapter-section .v-wrap { position: relative; }
+      .v-chapter-glow { position: absolute; top: 24%; left: 50%; width: min(900px, 110vw); height: 500px; transform: translateX(-50%); background: radial-gradient(50% 50% at 50% 50%, rgb(193 19 24 / 0.26), transparent 70%); filter: blur(20px); pointer-events: none; }
+
+      .v-specs { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 3vw, 32px); }
+      @media (min-width: 780px) { .v-specs { grid-template-columns: repeat(3, 1fr); } }
+      .v-spec-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--color-brand-600); }
+      .v-spec-title { margin-top: 8px; font-size: clamp(16px, 1.5vw, 18px); font-weight: 600; }
+      .v-spec-body { margin-top: 8px; font-size: 14.5px; color: var(--color-mute); }
+      .v-dark .v-spec-num { color: var(--color-accent-400); }
+      .v-dark .v-spec-title { color: #fff; }
+      .v-dark .v-spec-body { color: rgb(255 255 255 / 0.62); }
+
+      .v-chapter-media { max-width: 980px; margin: clamp(40px, 5vw, 60px) auto 0; }
+      .v-chapter-media .media--chrome { box-shadow: var(--shadow-xl); }
+      /* The chrome card clips its children, so the caption needs its own inset. */
+      .v-chapter-media .media-cap { padding: 11px 16px 13px; font-size: 12.5px; }
+      .v-dark .v-chapter-media .media--chrome { border-color: rgb(255 255 255 / 0.1); background: #12181f; }
+      .v-dark .v-chapter-media .media-bar { background: #12181f; }
+      .v-dark .v-chapter-media .media-url { background: #1b2531; border-color: rgb(255 255 255 / 0.08); color: var(--color-mute-soft); }
+      .v-dark .v-chapter-media .media-frame { border-color: rgb(255 255 255 / 0.1); }
+      .v-dark .v-chapter-media .media-cap { color: rgb(255 255 255 / 0.55); }
 
       /* ---------- CTA band ---------- */
       .v-cta { background: linear-gradient(120deg, var(--color-brand-600), var(--color-brand-500) 60%, var(--color-accent-500)); color: #fff; }
@@ -462,9 +536,9 @@ const features = [
 
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        [data-reveal], .v-demo-media { opacity: 1 !important; transform: none !important; transition: none !important; }
+        [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
         .v-scrollcue svg { animation: none; }
-        .v-step { opacity: 1 !important; }
+        .v-chapter-card:hover { transform: none; }
       }
     </style>
 
@@ -472,7 +546,7 @@ const features = [
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // 1) Scroll-reveal
-      const revealEls = document.querySelectorAll<HTMLElement>('[data-reveal], .v-demo-media');
+      const revealEls = document.querySelectorAll<HTMLElement>('[data-reveal]');
       if (reduce) {
         revealEls.forEach((el) => el.classList.add('is-visible'));
       } else if ('IntersectionObserver' in window) {
@@ -489,32 +563,23 @@ const features = [
         revealEls.forEach((el) => el.classList.add('is-visible'));
       }
 
-      // 2) Pinned scrollytelling: swap active media layer as each step centers
-      const steps = Array.from(document.querySelectorAll<HTMLElement>('.v-step'));
-      const layers = Array.from(document.querySelectorAll<HTMLElement>('[data-layer]'));
-      const frameUrl = document.querySelector<HTMLElement>('[data-frame-url]');
-      const setActive = (i: number) => {
-        steps.forEach((s, k) => s.classList.toggle('is-active', k === i));
-        layers.forEach((l, k) => {
-          const on = k === i;
-          l.classList.toggle('is-active', on);
-          // Only the visible layer's clip plays, saving CPU/bandwidth on the rest.
-          const vid = l.querySelector('video');
-          if (vid) { if (on) vid.play?.().catch(() => {}); else vid.pause?.(); }
+      // 2) Chapter cards scrub the hero recording to the moment they describe
+      const heroVideo = document.querySelector<HTMLVideoElement>('[data-hero-media] video');
+      document.querySelectorAll<HTMLElement>('[data-seek]').forEach((card) => {
+        card.addEventListener('click', () => {
+          if (!heroVideo) return;
+          const at = Number(card.dataset.seek);
+          if (!Number.isFinite(at)) return;
+          const seek = () => {
+            heroVideo.currentTime = at;
+            heroVideo.play?.().catch(() => {});
+          };
+          // currentTime only sticks once the video knows how long it is.
+          if (heroVideo.readyState >= 1) seek();
+          else heroVideo.addEventListener('loadedmetadata', seek, { once: true });
+          heroVideo.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
         });
-        if (frameUrl && steps[i]) frameUrl.textContent = steps[i].dataset.url ?? 'vento.app';
-      };
-      if (steps.length && 'IntersectionObserver' in window) {
-        const stepIO = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
-            });
-          },
-          { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-        );
-        steps.forEach((s) => stepIO.observe(s));
-      }
+      });
 
       // 3) Scroll progress bar + nav state + hero parallax (rAF-throttled)
       const bar = document.querySelector<HTMLElement>('[data-progress]');
