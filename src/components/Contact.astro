@@ -1,6 +1,17 @@
 ---
 import Decor from './Decor.astro';
 
+interface Props {
+  eyebrow?: string;
+  line1?: string;
+  line2?: string;
+}
+const {
+  eyebrow = '03 / Start a build',
+  line1 = 'Got a brief?',
+  line2 = 'Send it.',
+} = Astro.props;
+
 const links = [
   { label: 'GitHub', handle: '@SiamRahman29', href: 'https://github.com/SiamRahman29' },
   { label: 'LinkedIn', handle: 'siamrahman-29', href: 'https://www.linkedin.com/in/siamrahman-29/' },
@@ -8,11 +19,11 @@ const links = [
 ---
 <section class="contact" id="contact">
   <div class="container">
-    <span class="eyebrow">03 / Start a build</span>
+    <span class="eyebrow">{eyebrow}</span>
     <div class="contact-grid" style="margin-top: 28px;">
       <h2 class="contact-headline">
-        Got a brief?<br/>
-        <em>Send it.</em>
+        {line1}<br/>
+        <em>{line2}</em>
       </h2>
       <div class="contact-links">
         {links.map((l) => (
