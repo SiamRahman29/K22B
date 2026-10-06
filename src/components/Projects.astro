@@ -1,43 +1,6 @@
 ---
 import Decor from './Decor.astro';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-const projects = [
-  {
-    num: '01',
-    name: 'KSRML',
-    client: 'Keot-Khali Steel Re-Rolling Mills',
-    year: '2026',
-    tag: 'Industrial',
-    desc:
-      "Industrial gravity, made digital. A custom-spec steel rod showcase for a 25-year-old Bangladeshi mill: molten-metal hero, structured product runs, credibility on every scroll.",
-    href: 'https://ksrml.vercel.app/',
-    internal: false,
-  },
-  {
-    num: '02',
-    name: 'Flair Group',
-    client: 'Flair Group',
-    year: '2026',
-    tag: 'Corporate',
-    desc:
-      "Six divisions, one front door. A multi-sector corporate site for a Bangladeshi conglomerate, spanning nut-bolts to telecom to apparel, unified under one clean, navigable identity.",
-    href: 'https://flairgroup.netlify.app/',
-    internal: false,
-  },
-  {
-    num: '03',
-    name: 'Vento',
-    client: 'Product',
-    year: '2026',
-    tag: 'Product',
-    desc:
-      "Inventory & manufacturing, under one roof. Track stock by unit or weight, turn recipes into production batches, and issue branded invoices: one system from raw material to sale.",
-    href: `${base}/vento`,
-    internal: true,
-  },
-];
+import { projects } from '../data/sites';
 ---
 <section class="projects" id="work">
   <div class="container">
