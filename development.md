@@ -1,6 +1,6 @@
 # Development
 
-The website for **K22B**, a fast-shipping web-dev garage. Built with [Astro](https://astro.build/), hosted on GitHub Pages.
+The website for **K22B**, a software garage for the manufacturing industry, and its website studio, K22B Studio. Built with [Astro](https://astro.build/), hosted on GitHub Pages.
 
 ## Develop
 
@@ -37,12 +37,19 @@ One-time GitHub setup: in the repo's **Settings → Pages**, set **Source** to *
 ```
 src/
 ├── layouts/Base.astro     # <head>, fonts, OG meta
-├── pages/index.astro      # single-page entrypoint
+├── pages/
+│   ├── index.astro        # K22B parent homepage
+│   ├── studio.astro       # K22B Studio (websites)
+│   └── vento.astro        # Vento product showcase
 ├── components/
-│   ├── Nav.astro
-│   ├── Hero.astro
-│   ├── About.astro
-│   ├── Projects.astro    # KSRML + Flair Group cards
+│   ├── Nav.astro          # shared nav; links/CTA/sub-brand via props
+│   ├── HomeHero.astro     # parent hero
+│   ├── Products.astro     # Vento, Remy, Noyta cards + try/tailor/own steps
+│   ├── StudioTeaser.astro # homepage pointer to /studio
+│   ├── HomeAbout.astro    # parent about
+│   ├── Hero.astro         # Studio hero
+│   ├── About.astro        # Studio about
+│   ├── Projects.astro     # Studio work: KSRML + Flair Group cards
 │   ├── Contact.astro
 │   ├── Footer.astro
 │   └── Decor.astro        # geometric SVG primitives (sparkle, zigzag, etc.)
@@ -51,4 +58,4 @@ public/
 └── logo.png
 ```
 
-To add a new project, append to the `projects` array in `src/components/Projects.astro`.
+To add client work, append to the `projects` array in `src/components/Projects.astro`. To add or update a product, edit the `products` array in `src/components/Products.astro`.
