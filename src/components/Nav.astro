@@ -1,17 +1,30 @@
 ---
+interface Props {
+  sub?: string;
+  links?: { label: string; href: string }[];
+  cta?: { label: string; href: string };
+}
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const {
+  sub,
+  links = [
+    { label: 'Products', href: '#products' },
+    { label: 'Studio', href: `${base}/studio` },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  cta = { label: 'Get in touch →', href: '#contact' },
+} = Astro.props;
 ---
 <header class="nav">
   <div class="nav-inner">
     <a class="nav-brand" href={`${base}/`}>
       <img src={`${base}/favicon.png`} alt="" width="32" height="32" />
-      <span>K22B</span>
+      <span>K22B{sub && <span class="nav-brand-sub"> {sub}</span>}</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="nav-cta" href="#contact">Start a build →</a>
+    <a class="nav-cta" href={cta.href}>{cta.label}</a>
   </div>
 </header>
