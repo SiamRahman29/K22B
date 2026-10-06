@@ -1,0 +1,78 @@
+---
+import Decor from './Decor.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Products without an `href` render as non-clickable "in the garage" cards.
+const products = [
+  {
+    num: '01',
+    name: 'Vento',
+    category: 'Inventory & Manufacturing',
+    status: 'Live',
+    desc:
+      "Inventory & manufacturing, under one roof. Track stock by unit or weight, turn recipes into production batches, and issue branded invoices.",
+    href: `${base}/vento`,
+  },
+  {
+    num: '02',
+    name: 'Remy',
+    category: 'Product',
+    status: 'In the garage',
+    desc: 'Being built right now. Details landing soon.',
+  },
+  {
+    num: '03',
+    name: 'Noyta',
+    category: 'Product',
+    status: 'In the garage',
+    desc: 'Being built right now. Details landing soon.',
+  },
+];
+---
+<section class="products" id="products">
+  <div class="container">
+    <div class="projects-head">
+      <div>
+        <span class="eyebrow">01 / Products</span>
+        <h2 style="margin-top: 24px;">Flagship<br/><em>products.</em></h2>
+      </div>
+      <p>Software we own, built for manufacturers. Run it as-is, or have us fit it to your operation.</p>
+    </div>
+
+    <div class="product-grid">
+      {products.map((p) => {
+        const Tag = p.href ? 'a' : 'div';
+        return (
+          <Tag
+            class:list={['project-card', !p.href && 'project-card--soon']}
+            href={p.href}
+            aria-label={p.href ? `${p.name}: view product` : undefined}
+          >
+            <div class="project-thumb">
+              <div class="project-thumb-grid"></div>
+              <span class="project-num">{p.num} / {p.status}</span>
+              <div class="project-thumb-label">{p.name}</div>
+              <Decor type="sparkle" size={18} style="top: 14px; right: 16px; color: var(--ink);" />
+              <Decor type="zigzag" size={36} style="bottom: 14px; left: 14px; color: var(--ink);" />
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>{p.category}</span>
+                <span>{p.status}</span>
+              </div>
+              <div class="project-name">{p.name}</div>
+              <p class="project-desc">{p.desc}</p>
+              <span class="project-link">
+                {p.href ? <>See the product <span class="arrow">→</span></> : 'Coming soon'}
+              </span>
+            </div>
+          </Tag>
+        );
+      })}
+    </div>
+  </div>
+
+  <Decor type="open-circle" size={120} style="top: 8%; left: -30px; color: var(--ink);" />
+  <Decor type="sparkle" size={24} style="top: 22%; right: 6%; color: var(--ink);" class="float" />
+</section>

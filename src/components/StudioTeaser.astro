@@ -1,0 +1,41 @@
+---
+import Decor from './Decor.astro';
+import { projects } from '../data/sites';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="studio-teaser" id="studio">
+  <div class="container">
+    <span class="eyebrow">02 / Websites</span>
+    <div class="studio-head">
+      <h2 class="studio-title">
+        <span>K22B</span>
+        <span><span class="ink-fill">Studio.</span></span>
+      </h2>
+      <div class="studio-intro">
+        <p>
+          Our website studio. We design and build custom websites for businesses,
+          live in about ten days. You brief it, we ship it.
+        </p>
+        <a class="studio-cta" href={`${base}/studio`}>
+          Visit the Studio <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="studio-sites">
+      <span class="studio-sites-label">Recent sites</span>
+      {projects.map((p) => (
+        <a class="studio-site-row" href={p.href} target="_blank" rel="noopener noreferrer">
+          <span class="studio-site-name">{p.name}</span>
+          <span class="studio-site-client">{p.client}</span>
+          <span class="studio-site-tag">{p.tag}</span>
+          <span class="arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <Decor type="zigzag" size={80} style="top: 10%; right: 6%; color: var(--ink);" class="float" />
+  <Decor type="sparkle" size={18} style="bottom: 12%; left: 4%; color: var(--ink);" class="float float-delay" />
+</section>
